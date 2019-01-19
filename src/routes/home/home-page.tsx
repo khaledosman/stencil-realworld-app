@@ -1,9 +1,18 @@
-import { Component } from "@stencil/core";
+import { Component, Prop, State } from "@stencil/core";
+import { IUser } from "../../userTunnel";
 
 @Component({
   tag: "home-page"
 })
 export class HomePage {
+  @Prop() user: IUser;
+
+  @State() activeTag?: string;
+
+  setTag = (tag?: string) => {
+    this.activeTag = tag;
+  };
+
   render() {
     return (
       <main class="home-page">
@@ -15,8 +24,13 @@ export class HomePage {
         </div>
         <div class="container page">
           <div class="row">
-            <home-feed class="col-md-9" />
-            <home-tags class="col-md-3" />
+            <home-feed
+              class="col-md-9"
+              user={this.user}
+              clearTag={this.setTag}
+              activeTag={this.activeTag}
+            />
+            <home-tags class="col-md-3" setTag={this.setTag} />
           </div>
         </div>
       </main>

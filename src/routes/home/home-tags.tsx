@@ -1,39 +1,54 @@
-import { Component } from "@stencil/core";
+import { Component, State, Prop } from "@stencil/core";
+import { getTags } from "../../api/tags";
 
 @Component({
   tag: "home-tags"
 })
 export class HomeTags {
+  @Prop() setTag: (tag: string) => void;
+
+  @State() tags: string[] = [];
+
+  listTags = async () => {
+    const tagList = await getTags();
+    // TODO: maybe add error handling here?
+    const { success, tags } = tagList;
+    if (success) {
+      this.tags = tags;
+    }
+  };
+
+  handleClick = e => {
+    const name = e.target.getAttribute("data-tag-id");
+    if (name) {
+      this.setTag(name);
+    }
+  };
+
+  componentDidLoad() {
+    this.listTags();
+  }
+
   render() {
+    if (this.tags.length === 0) {
+      return <div class="sidebar" />;
+    }
+
     return (
       <div class="sidebar">
         <p>Popular Tags</p>
 
         <div class="tag-list">
-          <a href="" class="tag-pill tag-default">
-            programming
-          </a>
-          <a href="" class="tag-pill tag-default">
-            javascript
-          </a>
-          <a href="" class="tag-pill tag-default">
-            emberjs
-          </a>
-          <a href="" class="tag-pill tag-default">
-            angularjs
-          </a>
-          <a href="" class="tag-pill tag-default">
-            react
-          </a>
-          <a href="" class="tag-pill tag-default">
-            mean
-          </a>
-          <a href="" class="tag-pill tag-default">
-            node
-          </a>
-          <a href="" class="tag-pill tag-default">
-            rails
-          </a>
+          {this.tags.map(t => (
+            <button
+              type="button"
+              class="tag-pill tag-default"
+              data-tag-id={t}
+              onClick={this.handleClick}
+            >
+              {t}
+            </button>
+          ))}
         </div>
       </div>
     );

@@ -8,9 +8,11 @@ So far, I've got all the templates and proper auth in place. You can already reg
 
 ## What is left:
 
-- Articles, Profile, Home and Editor routes
-- Error handling for forms
+- Article route -> Following/unfollowing, markdown rendering and proper formatting
+- Profile and Editor routes -> the whole of it
+- Error handling for forms (displaying them for users)
 - Testing
+- See these and some other minor changes by searching for comments containing `TODO:`
 
 <!-- ### [Demo](https://github.com/gothinkster/realworld)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
 

@@ -10,6 +10,9 @@ import '@stencil/core';
 import '@stencil/router';
 import '@stencil/state-tunnel';
 import {
+  IProfile,
+} from './api/profiles';
+import {
   IUser,
 } from './userTunnel';
 import {
@@ -19,12 +22,32 @@ import {
   MatchResults,
   RouterHistory,
 } from '@stencil/router';
+import {
+  IComment,
+} from './api/comments';
+import {
+  IArticle,
+} from './api/articles';
+import {
+  IAPIErrors,
+} from './api/utils';
 
 
 export namespace Components {
 
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
+
+  interface ArticleMeta {
+    'author': IProfile;
+    'date': string;
+    'favoritesCount': number;
+  }
+  interface ArticleMetaAttributes extends StencilHTMLAttributes {
+    'author'?: IProfile;
+    'date'?: string;
+    'favoritesCount'?: number;
+  }
 
   interface AppFooter {}
   interface AppFooterAttributes extends StencilHTMLAttributes {}
@@ -38,6 +61,9 @@ export namespace Components {
     'user'?: IUser;
   }
 
+  interface LoadingSpinner {}
+  interface LoadingSpinnerAttributes extends StencilHTMLAttributes {}
+
   interface NotFound {
     'history': RouterHistory;
   }
@@ -45,8 +71,38 @@ export namespace Components {
     'history'?: RouterHistory;
   }
 
-  interface ArticlePage {}
-  interface ArticlePageAttributes extends StencilHTMLAttributes {}
+  interface ArticlePage {
+    'match': MatchResults;
+    'user': IUser;
+  }
+  interface ArticlePageAttributes extends StencilHTMLAttributes {
+    'match'?: MatchResults;
+    'user'?: IUser;
+  }
+
+  interface CommentForm {
+    'addComment': (comment: IComment) => void;
+    'slug': string;
+    'user': IUser;
+  }
+  interface CommentFormAttributes extends StencilHTMLAttributes {
+    'addComment'?: (comment: IComment) => void;
+    'slug'?: string;
+    'user'?: IUser;
+  }
+
+  interface SingleComment {
+    'comment': IComment;
+    'removeComment': (id: number) => void;
+    'slug': string;
+    'user': IUser;
+  }
+  interface SingleCommentAttributes extends StencilHTMLAttributes {
+    'comment'?: IComment;
+    'removeComment'?: (id: number) => void;
+    'slug'?: string;
+    'user'?: IUser;
+  }
 
   interface AuthPage {
     'match': MatchResults;
@@ -60,14 +116,39 @@ export namespace Components {
   interface EditorPage {}
   interface EditorPageAttributes extends StencilHTMLAttributes {}
 
-  interface HomeFeed {}
-  interface HomeFeedAttributes extends StencilHTMLAttributes {}
+  interface ArticleList {
+    'articles': IArticle[];
+    'errors': IAPIErrors;
+  }
+  interface ArticleListAttributes extends StencilHTMLAttributes {
+    'articles'?: IArticle[];
+    'errors'?: IAPIErrors;
+  }
 
-  interface HomePage {}
-  interface HomePageAttributes extends StencilHTMLAttributes {}
+  interface HomeFeed {
+    'activeTag'?: string;
+    'clearTag': () => void;
+    'user': IUser;
+  }
+  interface HomeFeedAttributes extends StencilHTMLAttributes {
+    'activeTag'?: string;
+    'clearTag'?: () => void;
+    'user'?: IUser;
+  }
 
-  interface HomeTags {}
-  interface HomeTagsAttributes extends StencilHTMLAttributes {}
+  interface HomePage {
+    'user': IUser;
+  }
+  interface HomePageAttributes extends StencilHTMLAttributes {
+    'user'?: IUser;
+  }
+
+  interface HomeTags {
+    'setTag': (tag: string) => void;
+  }
+  interface HomeTagsAttributes extends StencilHTMLAttributes {
+    'setTag'?: (tag: string) => void;
+  }
 
   interface ProfilePage {
     'match': MatchResults;
@@ -91,12 +172,17 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'AppRoot': Components.AppRoot;
+    'ArticleMeta': Components.ArticleMeta;
     'AppFooter': Components.AppFooter;
     'AppHeader': Components.AppHeader;
+    'LoadingSpinner': Components.LoadingSpinner;
     'NotFound': Components.NotFound;
     'ArticlePage': Components.ArticlePage;
+    'CommentForm': Components.CommentForm;
+    'SingleComment': Components.SingleComment;
     'AuthPage': Components.AuthPage;
     'EditorPage': Components.EditorPage;
+    'ArticleList': Components.ArticleList;
     'HomeFeed': Components.HomeFeed;
     'HomePage': Components.HomePage;
     'HomeTags': Components.HomeTags;
@@ -106,12 +192,17 @@ declare global {
 
   interface StencilIntrinsicElements {
     'app-root': Components.AppRootAttributes;
+    'article-meta': Components.ArticleMetaAttributes;
     'app-footer': Components.AppFooterAttributes;
     'app-header': Components.AppHeaderAttributes;
+    'loading-spinner': Components.LoadingSpinnerAttributes;
     'not-found': Components.NotFoundAttributes;
     'article-page': Components.ArticlePageAttributes;
+    'comment-form': Components.CommentFormAttributes;
+    'single-comment': Components.SingleCommentAttributes;
     'auth-page': Components.AuthPageAttributes;
     'editor-page': Components.EditorPageAttributes;
+    'article-list': Components.ArticleListAttributes;
     'home-feed': Components.HomeFeedAttributes;
     'home-page': Components.HomePageAttributes;
     'home-tags': Components.HomeTagsAttributes;
@@ -126,6 +217,12 @@ declare global {
     new (): HTMLAppRootElement;
   };
 
+  interface HTMLArticleMetaElement extends Components.ArticleMeta, HTMLStencilElement {}
+  var HTMLArticleMetaElement: {
+    prototype: HTMLArticleMetaElement;
+    new (): HTMLArticleMetaElement;
+  };
+
   interface HTMLAppFooterElement extends Components.AppFooter, HTMLStencilElement {}
   var HTMLAppFooterElement: {
     prototype: HTMLAppFooterElement;
@@ -136,6 +233,12 @@ declare global {
   var HTMLAppHeaderElement: {
     prototype: HTMLAppHeaderElement;
     new (): HTMLAppHeaderElement;
+  };
+
+  interface HTMLLoadingSpinnerElement extends Components.LoadingSpinner, HTMLStencilElement {}
+  var HTMLLoadingSpinnerElement: {
+    prototype: HTMLLoadingSpinnerElement;
+    new (): HTMLLoadingSpinnerElement;
   };
 
   interface HTMLNotFoundElement extends Components.NotFound, HTMLStencilElement {}
@@ -150,6 +253,18 @@ declare global {
     new (): HTMLArticlePageElement;
   };
 
+  interface HTMLCommentFormElement extends Components.CommentForm, HTMLStencilElement {}
+  var HTMLCommentFormElement: {
+    prototype: HTMLCommentFormElement;
+    new (): HTMLCommentFormElement;
+  };
+
+  interface HTMLSingleCommentElement extends Components.SingleComment, HTMLStencilElement {}
+  var HTMLSingleCommentElement: {
+    prototype: HTMLSingleCommentElement;
+    new (): HTMLSingleCommentElement;
+  };
+
   interface HTMLAuthPageElement extends Components.AuthPage, HTMLStencilElement {}
   var HTMLAuthPageElement: {
     prototype: HTMLAuthPageElement;
@@ -160,6 +275,12 @@ declare global {
   var HTMLEditorPageElement: {
     prototype: HTMLEditorPageElement;
     new (): HTMLEditorPageElement;
+  };
+
+  interface HTMLArticleListElement extends Components.ArticleList, HTMLStencilElement {}
+  var HTMLArticleListElement: {
+    prototype: HTMLArticleListElement;
+    new (): HTMLArticleListElement;
   };
 
   interface HTMLHomeFeedElement extends Components.HomeFeed, HTMLStencilElement {}
@@ -194,12 +315,17 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement
+    'article-meta': HTMLArticleMetaElement
     'app-footer': HTMLAppFooterElement
     'app-header': HTMLAppHeaderElement
+    'loading-spinner': HTMLLoadingSpinnerElement
     'not-found': HTMLNotFoundElement
     'article-page': HTMLArticlePageElement
+    'comment-form': HTMLCommentFormElement
+    'single-comment': HTMLSingleCommentElement
     'auth-page': HTMLAuthPageElement
     'editor-page': HTMLEditorPageElement
+    'article-list': HTMLArticleListElement
     'home-feed': HTMLHomeFeedElement
     'home-page': HTMLHomePageElement
     'home-tags': HTMLHomeTagsElement
@@ -209,12 +335,17 @@ declare global {
 
   interface ElementTagNameMap {
     'app-root': HTMLAppRootElement;
+    'article-meta': HTMLArticleMetaElement;
     'app-footer': HTMLAppFooterElement;
     'app-header': HTMLAppHeaderElement;
+    'loading-spinner': HTMLLoadingSpinnerElement;
     'not-found': HTMLNotFoundElement;
     'article-page': HTMLArticlePageElement;
+    'comment-form': HTMLCommentFormElement;
+    'single-comment': HTMLSingleCommentElement;
     'auth-page': HTMLAuthPageElement;
     'editor-page': HTMLEditorPageElement;
+    'article-list': HTMLArticleListElement;
     'home-feed': HTMLHomeFeedElement;
     'home-page': HTMLHomePageElement;
     'home-tags': HTMLHomeTagsElement;

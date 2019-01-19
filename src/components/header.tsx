@@ -9,14 +9,15 @@ export class Header {
   @Prop() user?: IUser;
   @Prop() signOut: TSignOut;
 
+  // TODO: icons and style the sign-out button
   render() {
     const { user } = this;
     return (
       <nav class="navbar navbar-light">
         <div class="container">
-          <a class="navbar-brand" href="index.html">
+          <stencil-route-link class="navbar-brand" url="/">
             conduit
-          </a>
+          </stencil-route-link>
           <ul class="nav navbar-nav pull-xs-right">
             <li class="nav-item">
               <stencil-route-link

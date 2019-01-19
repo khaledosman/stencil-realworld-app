@@ -36,7 +36,7 @@ export const getCommentsList = async (slug: string) => {
 
 // Deleting an comment either returns an error or an empty
 // object for success.
-export const deleteComment = async (slug: string, id: string, token: string) => {
+export const deleteComment = async (slug: string, id: number, token: string) => {
   const commentInfo: IBaseAPIReq = await standardReq({
     path: `articles/${slug}/comments/${id}`,
     method: "DELETE",

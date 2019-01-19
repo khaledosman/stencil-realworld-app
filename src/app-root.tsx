@@ -65,27 +65,29 @@ export class AppRoot {
   }
 
   render() {
-    const isLogged = this.user && this.user.id ? true : false;
+    const { user } = this;
+    const isLogged = user && user.id ? true : false;
     return (
       <div>
-        <app-header user={this.user} signOut={this.signOut} />
+        <app-header user={user} signOut={this.signOut} />
         <AuthTunnel.Provider
           state={{
-            user: this.user
+            user,
           }}
         >
           <stencil-router>
             <stencil-route-switch scrollTopOffset={0}>
-              <stencil-route url="/" component="home-page" exact={true} />
+              <stencil-route url="/" component="home-page" exact={true} componentProps={{ user }} />
               <stencil-route
                 url={["/profile/:userId", "/profile/:userId/favorites"]}
                 component="profile-page"
                 exact={true}
               />
               <stencil-route
-                url="/article/:articleSlug"
+                url="/article/:slug"
                 component="article-page"
                 exact={true}
+                componentProps={{ user }}
               />
               {/* Protected routes check if logged, else render 404 */}
               <stencil-route
@@ -94,11 +96,11 @@ export class AppRoot {
                 exact={true}
                 componentProps={{
                   setUser: this.setUser,
-                  user: this.user,
+                  user,
                 }}
               />
               <stencil-route
-                url={["/editor", "/editor/:articleSlug"]}
+                url={["/editor", "/editor/:slug"]}
                 component={isLogged ? "editor-page" : "not-found"}
                 exact={true}
               />

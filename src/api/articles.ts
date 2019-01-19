@@ -17,11 +17,12 @@ export interface IArticle {
 export interface IGetArticleListProps {
   params?: string;
   token?: string;
-  isFeed?: string;
+  isFeed?: boolean;
 }
 
 interface IArticleList extends IBaseAPIReq {
   articles?: IArticle[];
+  articlesCount?: 500;
 }
 
 export const getArticleList = async ({
@@ -30,14 +31,15 @@ export const getArticleList = async ({
   isFeed
 }: IGetArticleListProps) => {
   const articleList: IArticleList = await standardReq({
-    path: `articles${isFeed && "/feed"}${params && `?${params}`}`,
+    path: `articles${isFeed ? "/feed" : ''}${params && `?${params}`}`,
     method: "GET",
     token
   });
-  const { articles, errors } = articleList;
+  const { articles, articlesCount, errors } = articleList;
   return {
     success: Array.isArray(articles) ? true : false,
     articles,
+    articlesCount,
     errors
   };
 };
