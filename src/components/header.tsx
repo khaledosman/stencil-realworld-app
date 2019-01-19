@@ -1,6 +1,5 @@
 import { Component, Prop } from "@stencil/core";
-import { IUser } from "../userTunnel";
-import { TSignOut } from "../api/auth";
+import { TSignOut, IUser } from "../api/auth";
 
 @Component({
   tag: "app-header"

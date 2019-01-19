@@ -1,5 +1,15 @@
 import { standardReq, IBaseAPIReq } from "./utils";
-import { IUser } from "../userTunnel";
+
+export interface IUser {
+  id: number;
+  email: string;
+  username: string;
+  updatedAt: string;
+  createdAt: string;
+  token: string;
+  bio?: string;
+  image?: string;
+}
 
 export interface ISignInCredentials {
   email: string;

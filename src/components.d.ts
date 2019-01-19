@@ -14,8 +14,6 @@ import {
 } from './api/profiles';
 import {
   IUser,
-} from './userTunnel';
-import {
   TSignOut,
 } from './api/auth';
 import {

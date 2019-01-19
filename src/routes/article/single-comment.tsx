@@ -1,6 +1,6 @@
 import { Component, Prop } from "@stencil/core";
 import { IComment, deleteComment } from "../../api/comments";
-import { IUser } from "../../userTunnel";
+import { IUser } from "../../api/auth";
 
 @Component({
   tag: "single-comment"

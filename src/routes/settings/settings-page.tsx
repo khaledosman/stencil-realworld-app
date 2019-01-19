@@ -1,7 +1,6 @@
 import { Component, Prop, State } from "@stencil/core";
-import { IUser } from "../../userTunnel";
 import { IAPIErrors } from "../../api/utils";
-import { updateUser, IUserUpdate } from "../../api/auth";
+import { updateUser, IUserUpdate, IUser } from "../../api/auth";
 
 const inputFields = [
   { id: "image", placeholder: "URL of profile picture", type: "text" },

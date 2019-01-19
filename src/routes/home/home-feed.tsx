@@ -1,7 +1,7 @@
 import { Component, State, Prop, Watch } from "@stencil/core";
 import { getArticleList, IArticle } from "../../api/articles";
-import { IUser } from "../../userTunnel";
 import { IAPIErrors } from "../../api/utils";
+import { IUser } from "../../api/auth";
 
 const perPage = 10;
 

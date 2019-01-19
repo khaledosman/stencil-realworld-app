@@ -2,7 +2,7 @@ import { Component, Prop, State } from "@stencil/core";
 import { MatchResults } from "@stencil/router";
 import { IAPIErrors } from "../../api/utils";
 import { IProfile, getProfile } from "../../api/profiles";
-import { IUser } from "../../userTunnel";
+import { IUser } from "../../api/auth";
 
 @Component({
   tag: "profile-page"

@@ -8,9 +8,9 @@ import {
   favoriteArticle
 } from "../../api/articles";
 import { IAPIErrors } from "../../api/utils";
-import { IUser } from "../../userTunnel";
 import { IComment, getCommentsList } from "../../api/comments";
 import { followProfile } from "../../api/profiles";
+import { IUser } from "../../api/auth";
 
 @Component({
   tag: "article-page"

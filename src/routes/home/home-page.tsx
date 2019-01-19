@@ -1,5 +1,5 @@
 import { Component, Prop, State } from "@stencil/core";
-import { IUser } from "../../userTunnel";
+import { IUser } from "../../api/auth";
 
 @Component({
   tag: "home-page"

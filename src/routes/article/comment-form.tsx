@@ -1,7 +1,7 @@
 import { Component, State, Prop } from "@stencil/core";
-import { IUser } from "../../userTunnel";
 import { createComment, IComment } from "../../api/comments";
 import { IAPIErrors } from "../../api/utils";
+import { IUser } from "../../api/auth";
 
 @Component({
   tag: "comment-form"

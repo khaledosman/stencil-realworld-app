@@ -1,10 +1,7 @@
 import { Component, State } from "@stencil/core";
 import "@stencil/router";
 
-import AuthTunnel, { IUser } from "./userTunnel";
-import {
-  getUser,
-} from "./api/auth";
+import { getUser, IUser } from "./api/auth";
 import { IAPIErrors } from "./api/utils";
 
 @Component({
@@ -61,57 +58,56 @@ export class AppRoot {
     return (
       <div>
         <app-header user={user} signOut={this.signOut} />
-        <AuthTunnel.Provider
-          state={{
-            user,
-          }}
-        >
-          <stencil-router>
-            <stencil-route-switch scrollTopOffset={0}>
-              <stencil-route url="/" component="home-page" exact={true} componentProps={{ user }} />
-              <stencil-route
-                url="/profile/:username"
-                component="profile-page"
-                exact={true}
-              />
-              <stencil-route
-                url="/profile/:username/favorites"
-                component="profile-page"
-                exact={true}
-              />
-              <stencil-route
-                url="/article/:slug"
-                component="article-page"
-                exact={true}
-                componentProps={{ user }}
-              />
-              {/* Protected routes check if logged, else render 404 */}
-              <stencil-route
-                url="/settings"
-                component={isLogged ? "settings-page" : "not-found"}
-                exact={true}
-                componentProps={{
-                  setUser: this.setUser,
-                  user,
-                }}
-              />
-              <stencil-route
-                url={["/editor", "/editor/:slug"]}
-                component={isLogged ? "editor-page" : "not-found"}
-                exact={true}
-              />
-              {/* Visitor-only routes? check if logged, if so, render 404 */}
-              <stencil-route
-                url={["/login", "/register"]}
-                component={isLogged ? "not-found" : "auth-page"}
-                componentProps={{ setUser: this.setUser }}
-                exact={true}
-              />
-              {/* Catch-all 404 route */}
-              <stencil-route component="not-found" />
-            </stencil-route-switch>
-          </stencil-router>
-        </AuthTunnel.Provider>
+        <stencil-router>
+          <stencil-route-switch scrollTopOffset={0}>
+            <stencil-route
+              url="/"
+              component="home-page"
+              exact={true}
+              componentProps={{ user }}
+            />
+            <stencil-route
+              url="/profile/:username"
+              component="profile-page"
+              exact={true}
+            />
+            <stencil-route
+              url="/profile/:username/favorites"
+              component="profile-page"
+              exact={true}
+            />
+            <stencil-route
+              url="/article/:slug"
+              component="article-page"
+              exact={true}
+              componentProps={{ user }}
+            />
+            {/* Protected routes check if logged, else render 404 */}
+            <stencil-route
+              url="/settings"
+              component={isLogged ? "settings-page" : "not-found"}
+              exact={true}
+              componentProps={{
+                setUser: this.setUser,
+                user
+              }}
+            />
+            <stencil-route
+              url={["/editor", "/editor/:slug"]}
+              component={isLogged ? "editor-page" : "not-found"}
+              exact={true}
+            />
+            {/* Visitor-only routes? check if logged, if so, render 404 */}
+            <stencil-route
+              url={["/login", "/register"]}
+              component={isLogged ? "not-found" : "auth-page"}
+              componentProps={{ setUser: this.setUser }}
+              exact={true}
+            />
+            {/* Catch-all 404 route */}
+            <stencil-route component="not-found" />
+          </stencil-route-switch>
+        </stencil-router>
         <app-footer />
       </div>
     );

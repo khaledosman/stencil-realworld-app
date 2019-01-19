@@ -1,6 +1,5 @@
 import { Component, Prop, State } from "@stencil/core";
-import { IHandleUserReturn, logUser, registerUser } from "../../api/auth";
-import { IUser } from "../../userTunnel";
+import { IHandleUserReturn, logUser, registerUser, IUser } from "../../api/auth";
 import { IAPIErrors } from "../../api/utils";
 import { MatchResults } from "@stencil/router";
 
