@@ -41,12 +41,18 @@ export namespace Components {
   interface ArticleMeta {
     'author': IProfile;
     'date': string;
+    'favorited': boolean;
     'favoritesCount': number;
+    'followFavorite': (isFollow: boolean) => void;
+    'following': boolean;
   }
   interface ArticleMetaAttributes extends StencilHTMLAttributes {
     'author'?: IProfile;
     'date'?: string;
+    'favorited'?: boolean;
     'favoritesCount'?: number;
+    'followFavorite'?: (isFollow: boolean) => void;
+    'following'?: boolean;
   }
 
   interface AppFooter {}
@@ -73,7 +79,7 @@ export namespace Components {
 
   interface ArticlePage {
     'match': MatchResults;
-    'user': IUser;
+    'user'?: IUser;
   }
   interface ArticlePageAttributes extends StencilHTMLAttributes {
     'match'?: MatchResults;
@@ -152,11 +158,11 @@ export namespace Components {
 
   interface ProfilePage {
     'match': MatchResults;
-    'settingsTab'?: boolean;
+    'user'?: IUser;
   }
   interface ProfilePageAttributes extends StencilHTMLAttributes {
     'match'?: MatchResults;
-    'settingsTab'?: boolean;
+    'user'?: IUser;
   }
 
   interface SettingsPage {

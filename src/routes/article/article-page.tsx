@@ -1,17 +1,26 @@
 import { Component, State, Prop } from "@stencil/core";
 import { MatchResults } from "@stencil/router";
-import { IArticle, getSingleArticle } from "../../api/articles";
+import marked from "marked";
+
+import {
+  IArticle,
+  getSingleArticle,
+  favoriteArticle
+} from "../../api/articles";
 import { IAPIErrors } from "../../api/utils";
 import { IUser } from "../../userTunnel";
 import { IComment, getCommentsList } from "../../api/comments";
+import { followProfile } from "../../api/profiles";
 
 @Component({
   tag: "article-page"
 })
 export class ArticlePage {
-  @Prop() user: IUser;
+  @Prop() user?: IUser;
   @Prop() match: MatchResults;
 
+  @State() following: boolean = false;
+  @State() favorited: boolean = false;
   @State() isLoading: boolean = true;
   @State() notFound: boolean = false;
   @State() errors?: IAPIErrors;
@@ -26,6 +35,12 @@ export class ArticlePage {
     const { success, errors, article } = articleInfo;
     if (success) {
       this.article = article;
+      if (article.favorited) {
+        this.favorited = true;
+      }
+      if (article.author.following) {
+        this.following = true;
+      }
     } else {
       this.errors = errors;
     }
@@ -48,6 +63,32 @@ export class ArticlePage {
 
   removeComment = (id: number) => {
     this.comments = this.comments.filter(c => c.id !== id);
+  };
+
+  // Function that toggles if the article is favorited and if
+  // the author is followed
+  followFavorite = async (isFollow: boolean) => {
+    if (!this.article || !this.user) {
+      return;
+    }
+    const stateId = isFollow ? "following" : "favorited";
+    const identifier = isFollow
+      ? this.article.author.username
+      : this.article.slug;
+    const undo = this[stateId];
+    const res = isFollow
+      ? await followProfile(identifier, this.user.token, undo)
+      : await favoriteArticle(identifier, this.user.token, undo);
+    const { success } = res;
+    if (success) {
+      this[stateId] = !undo;
+      if (!isFollow) {
+        this.article = {
+          ...this.article,
+          favoritesCount: this.article.favoritesCount + (undo ? -1 : 1)
+        };
+      }
+    }
   };
 
   componentDidLoad() {
@@ -79,37 +120,34 @@ export class ArticlePage {
       return <not-found />;
     }
 
-    const { article: a } = this;
+    const { article: a, favorited, following, followFavorite } = this;
     const { slug } = this.match.params;
+    const metaProps = {
+      author: a.author,
+      date: a.updatedAt,
+      favoritesCount: a.favoritesCount,
+      favorited,
+      following,
+      followFavorite
+    };
     return (
       <main class="article-page">
         <div class="banner">
           <div class="container">
             <h1>{a.title}</h1>
-            <article-meta
-              author={a.author}
-              date={a.updatedAt}
-              favoritesCount={a.favoritesCount}
-            />
+            <article-meta {...metaProps} />
           </div>
         </div>
 
         <div class="container page">
           <div class="row article-content">
-            <div class="col-md-12">
-              {/* TODO: parse markdown */}
-              {a.body}
-            </div>
+            <div class="col-md-12" innerHTML={marked(a.body)} />
           </div>
 
           <hr />
 
           <div class="article-actions">
-            <article-meta
-              author={a.author}
-              date={a.updatedAt}
-              favoritesCount={a.favoritesCount}
-            />
+            <article-meta {...metaProps} />
           </div>
 
           <div class="row">

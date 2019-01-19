@@ -8,6 +8,13 @@ export class ArticleMeta {
   @Prop() author: IProfile;
   @Prop() date: string;
   @Prop() favoritesCount: number;
+  @Prop() favorited: boolean;
+  @Prop() following: boolean;
+  @Prop() followFavorite: (isFollow: boolean) => void;
+
+  followAuthor = () => this.followFavorite(true);
+
+  favoriteArticle = () => this.followFavorite(false);
 
   render() {
     const { username, image } = this.author;
@@ -28,15 +35,26 @@ export class ArticleMeta {
             })}
           </span>
         </div>
-        {/* Author's follower count */}
-        <button class="btn btn-sm btn-outline-secondary">
-          <i class="ion-plus-round" />
-          &nbsp; Follow {username} <span class="counter">(10)</span>
+        <button
+          class={`btn btn-sm ${
+            this.following ? "btn-outline-secondary" : "btn-secondary"
+          }`}
+          aria-label={`Click to follow ${username}`}
+          onClick={this.followAuthor}
+        >
+          {this.following && <i class="ion-plus-round" />}
+          &nbsp; {this.following ? 'Follow' : 'Unfollow'} {username}
         </button>
         &nbsp;&nbsp;
-        <button class="btn btn-sm btn-outline-primary">
+        <button
+          class={`btn btn-sm ${
+            this.favorited ? "btn-primary" : "btn-outline-primary"
+          }`}
+          aria-label={`Click to favorite this article`}
+          onClick={this.favoriteArticle}
+        >
           <i class="ion-heart" />
-          &nbsp; Favorite Post{" "}
+          &nbsp; Favorite Article{" "}
           <span class="counter">({this.favoritesCount})</span>
         </button>
       </div>

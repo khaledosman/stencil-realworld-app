@@ -1,29 +1,75 @@
-import { Component, Prop } from "@stencil/core";
+import { Component, Prop, State } from "@stencil/core";
 import { MatchResults } from "@stencil/router";
+import { IAPIErrors } from "../../api/utils";
+import { IProfile, getProfile } from "../../api/profiles";
+import { IUser } from "../../userTunnel";
 
 @Component({
   tag: "profile-page"
 })
 export class ProfilePage {
-  @Prop() settingsTab?: boolean;
   @Prop() match: MatchResults;
+  @Prop() user?: IUser;
+
+  @State() following: boolean = false;
+  @State() isLoading: boolean = true;
+  @State() notFound: boolean = false;
+  @State() errors?: IAPIErrors;
+  @State() profile?: IProfile;
+
+  fetchProfile = async () => {
+    const { username } = this.match.params;
+    console.log(username);
+    if (!username) {
+      this.notFound = true;
+      this.isLoading = false;
+    }
+    const token = this.user ? this.user.token : undefined;
+    const articleInfo = await getProfile(username, token);
+    const { success, errors, profile } = articleInfo;
+    if (success) {
+      this.profile = profile;
+    } else {
+      this.errors = errors;
+    }
+    this.isLoading = false;
+  };
+
+  componentDidLoad() {
+    this.fetchProfile();
+  }
 
   render() {
+    if (this.isLoading) {
+      return <loading-spinner />;
+    }
+
+    // TODO: error-handling
+    if (this.errors) {
+      return [
+        <h1>Something went wrong</h1>,
+        <code>{JSON.stringify(this.errors)}</code>
+      ];
+    }
+
+    if (this.notFound || !this.profile) {
+      console.log(`roaldno`)
+      return <not-found />;
+    }
+
+    const { username, image, bio, following } = this.profile;
     return (
       <main class="profile-page">
         <div class="user-info">
           <div class="container">
             <div class="row">
               <div class="col-xs-12 col-md-10 offset-md-1">
-                <img src="http://i.imgur.com/Qr71crq.jpg" class="user-img" />
-                <h4>{this.match.params.userId}</h4>
-                <p>
-                  Cofounder @GoThinkster, lived in Aol's HQ for a few months,
-                  kinda looks like Peeta from the Hunger Games
-                </p>
-                <button class="btn btn-sm btn-outline-secondary action-btn">
+                <img src={image} class="user-img" />
+                <h4>{username}</h4>
+                {bio && <p>{bio}</p>}
+                <button class={`btn btn-sm action-btn ${following ? 'btn-secondary' : 'btn-outline-secondary'}`}>
                   <i class="ion-plus-round" />
-                  &nbsp; Follow Eric Simons
+                  &nbsp; Follow {username}
                 </button>
               </div>
             </div>
@@ -37,12 +83,12 @@ export class ProfilePage {
                 <ul class="nav nav-pills outline-active">
                   <li class="nav-item">
                     <a class="nav-link active" href="">
-                      My Articles
+                      My Profiles
                     </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="">
-                      Favorited Articles
+                      Favorited Profiles
                     </a>
                   </li>
                 </ul>

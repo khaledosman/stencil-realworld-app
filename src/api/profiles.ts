@@ -1,4 +1,4 @@
-import { standardReq } from "./utils";
+import { standardReq, IBaseAPIReq } from "./utils";
 
 export interface IProfile {
   username: string;
@@ -7,11 +7,8 @@ export interface IProfile {
   image?: string;
 }
 
-// export type TGetProfileProps = (username: string, token?: string) => void;
-
-interface IProfileInfo {
+interface IProfileInfo extends IBaseAPIReq {
   profile?: IProfile;
-  errors?: Object;
 }
 
 const handleProfileReturn = ({ profile, errors }: IProfileInfo) => {

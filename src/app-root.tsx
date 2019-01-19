@@ -12,7 +12,6 @@ import { IAPIErrors } from "./api/utils";
 })
 export class AppRoot {
   @State() user: IUser;
-  // TODO: typechecking errors
   @State() errors?: IAPIErrors;
 
   setUser = (user: IUser) => {
@@ -43,14 +42,6 @@ export class AppRoot {
     }
   };
 
-  // updateUser = async (newUser: IUserUpdate) => {
-  //   if (!this.user || !this.user.token) {
-  //     return;
-  //   }
-  //   const res = await updateUser(newUser, this.user.token);
-  //   this.changeUserState(res, true);
-  // };
-
   componentWillLoad() {
     const user = localStorage.getItem("user");
     if (user) {
@@ -79,7 +70,12 @@ export class AppRoot {
             <stencil-route-switch scrollTopOffset={0}>
               <stencil-route url="/" component="home-page" exact={true} componentProps={{ user }} />
               <stencil-route
-                url={["/profile/:userId", "/profile/:userId/favorites"]}
+                url="/profile/:username"
+                component="profile-page"
+                exact={true}
+              />
+              <stencil-route
+                url="/profile/:username/favorites"
                 component="profile-page"
                 exact={true}
               />

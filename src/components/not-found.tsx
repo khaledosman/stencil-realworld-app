@@ -11,6 +11,8 @@ export class NotFound {
 
   componentWillLoad() {
     console.log("rolando");
+    // TODO: navigate without the history prop, as it shouldn't be necessary
+    // Where art thou, navigate?
     this.history.push("/");
   }
 
