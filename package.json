@@ -1,0 +1,20 @@
+{
+  "name": "stencil-realworld-example-app",
+  "version": "0.0.1",
+  "description": "Stencil RealWorld Example App (Conduit)",
+  "scripts": {
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll"
+  },
+  "dependencies": {
+    "@stencil/core": "^0.17.0-1",
+    "@stencil/router": "^0.3.2",
+    "@stencil/state-tunnel": "0.0.9-1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "workbox-build": "3.4.1"
+  }
+}
