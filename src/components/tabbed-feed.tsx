@@ -90,6 +90,14 @@ export class TabbedFeed {
     }
   };
 
+  goToPage = e => {
+    const num = e.target.getAttribute("data-page-num");
+    if (num) {
+      this.currentPage = parseInt(num);
+      this.fetchArticles();
+    }
+  };
+
   componentWillLoad() {
     this.activeTab = this.possibleTabs[0];
   }
@@ -100,7 +108,10 @@ export class TabbedFeed {
 
   render() {
     const { activeTab, activeTag } = this;
-    const wrapperClass = this.isProfile ? 'articles-toggle' : 'feed-toggle';
+    const wrapperClass = this.isProfile ? "articles-toggle" : "feed-toggle";
+    const count = this.articlesCount || 0;
+    const pagesArray = Array(Math.ceil(this.articlesCount / perPage)).fill(1);
+    console.log(this.currentPage);
     return [
       <div class={wrapperClass}>
         <ul class="nav nav-pills outline-active">
@@ -135,7 +146,30 @@ export class TabbedFeed {
       this.isLoading ? (
         <loading-spinner />
       ) : (
-        <article-list articles={this.articles} errors={this.errors} />
+        [
+          <article-list articles={this.articles} errors={this.errors} />,
+          count > perPage && (
+            <ul class="pagination">
+              {pagesArray.map((p, i) => (
+                <li
+                  // The `p` below is, unfortunately, only to escape typescript's
+                  // compiler, else it'll say `p` is declared but never used
+                  class={`page-item ${
+                    i === this.currentPage && p ? "active" : ""
+                  }`}
+                >
+                  <button
+                    class="page-link"
+                    onClick={this.goToPage}
+                    data-page-num={i}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )
+        ]
       )
     ];
   }

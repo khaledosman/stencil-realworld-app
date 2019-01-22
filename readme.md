@@ -10,7 +10,7 @@ So far, I've got all the templates and proper auth in place. You can already reg
 
 - Error handling for forms (displaying them for users)
 - Testing
-- Pagination
+- Loading component
 - Changing the document's title according to current page
 - See these and some other minor changes by searching for comments containing `TODO:`
 
