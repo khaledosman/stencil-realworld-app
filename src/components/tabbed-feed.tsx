@@ -1,19 +1,31 @@
 import { Component, State, Prop, Watch } from "@stencil/core";
-import { getArticleList, IArticle } from "../../api/articles";
-import { IAPIErrors } from "../../api/utils";
-import { IUser } from "../../api/auth";
+import { getArticleList, IArticle } from "../api/articles";
+import { IAPIErrors } from "../api/utils";
+import { IUser } from "../api/auth";
+import { TTabTypes } from "./types";
+import { IProfile } from "../api/profiles";
 
 const perPage = 10;
 
-@Component({
-  tag: "home-feed"
-})
-export class HomeFeed {
-  @Prop() user: IUser;
-  @Prop() clearTag: () => void;
-  @Prop() activeTag?: string;
+const tabLabels = {
+  global: "Global Feed",
+  feed: "Your Feed",
+  authored: "My Articles",
+  favorited: "Favorited Articles"
+};
 
-  @State() activeTab: "global" | "feed" | "tag" = 'global';
+@Component({
+  tag: "tabbed-feed"
+})
+export class TabbedFeed {
+  @Prop() possibleTabs: Array<TTabTypes> = ["global"];
+  @Prop() user?: IUser;
+  @Prop() profile?: IProfile;
+  @Prop() clearTag?: () => void;
+  @Prop() activeTag?: string;
+  @Prop() isProfile?: boolean;
+
+  @State() activeTab?: TTabTypes;
   @State() currentPage: number = 0;
   @State() articles: IArticle[] = [];
   @State() articlesCount: number = 0;
@@ -29,7 +41,15 @@ export class HomeFeed {
       this.activeTag && this.activeTab === "tag"
         ? `tag=${this.activeTag}&`
         : "";
-    const params = `limit=${perPage}&${offset}${tag}`;
+    const author =
+      this.activeTab === "authored" && this.profile
+        ? `author=${this.profile.username}&`
+        : "";
+    const favorited =
+      this.activeTab === "favorited" && this.profile
+        ? `favorited=${this.profile.username}&`
+        : "";
+    const params = `limit=${perPage}&${offset}${tag}${author}${favorited}`;
 
     const articleList = await getArticleList({
       token: user && user.token,
@@ -48,15 +68,15 @@ export class HomeFeed {
 
   @Watch("activeTab")
   fetchArticles() {
-    if (this.activeTab !== 'tag') {
-      this.clearTag();
+    if (this.activeTab !== "tag") {
+      this.clearTag && this.clearTag();
     }
     this.listArticles();
   }
 
   @Watch("activeTag")
   goToTagTab(newValue) {
-    if (newValue && this.activeTab !== 'tag') {
+    if (newValue && this.activeTab !== "tag") {
       this.activeTab = "tag";
     } else if (newValue) {
       this.listArticles();
@@ -70,46 +90,40 @@ export class HomeFeed {
     }
   };
 
+  componentWillLoad() {
+    this.activeTab = this.possibleTabs[0];
+  }
+
   componentDidLoad() {
     this.listArticles();
   }
 
   render() {
-    const { user, activeTab, activeTag } = this;
-    const isLogged = user && user.token ? true : false;
+    const { activeTab, activeTag } = this;
+    const wrapperClass = this.isProfile ? 'articles-toggle' : 'feed-toggle';
     return [
-      <div class="feed-toggle">
+      <div class={wrapperClass}>
         <ul class="nav nav-pills outline-active">
-          {isLogged && (
+          {this.possibleTabs.map(t => (
             <li class="nav-item">
               <button
                 onClick={this.toggleTab}
-                data-tab-id="feed"
-                class={`nav-link ${activeTab === "feed" ? "active disabled" : ""}`}
+                data-tab-id={t}
+                class={`nav-link ${activeTab === t ? "active disabled" : ""}`}
                 type="button"
-                aria-label="Button to toggle your personal feed"
-                disabled={activeTab === 'feed'}
+                aria-label={`Button to toggle your ${t} feed`}
+                disabled={activeTab === t}
               >
-                Your Feed
+                {tabLabels[t]}
               </button>
             </li>
-          )}
-          <li class="nav-item">
-            <button
-              onClick={this.toggleTab}
-              data-tab-id="global"
-              class={`nav-link ${activeTab === "global" ? "active disabled" : ""}`}
-              type="button"
-              aria-label="Button to toggle the global feed"
-              disabled={activeTab === 'global'}
-            >
-              Global Feed
-            </button>
-          </li>
+          ))}
           {activeTag && (
             <li class="nav-item">
               <span
-                class={`nav-link ${activeTab === "tag" ? "active disabled" : ""}`}
+                class={`nav-link ${
+                  activeTab === "tag" ? "active disabled" : ""
+                }`}
               >
                 <i class="ion-pound" /> {activeTag}
               </span>

@@ -8,10 +8,10 @@ So far, I've got all the templates and proper auth in place. You can already reg
 
 ## What is left:
 
-- Profile and Editor routes -> the whole of it
 - Error handling for forms (displaying them for users)
-- Clearing the styles for buttons, as the templates are made of anchors and, for accessibility purposes, I used buttons instead
 - Testing
+- Pagination
+- Changing the document's title according to current page
 - See these and some other minor changes by searching for comments containing `TODO:`
 
 <!-- ### [Demo](https://github.com/gothinkster/realworld)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)

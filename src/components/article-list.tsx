@@ -1,6 +1,6 @@
 import { Component, Prop } from "@stencil/core";
-import { IArticle } from "../../api/articles";
-import { IAPIErrors } from "../../api/utils";
+import { IArticle } from "../api/articles";
+import { IAPIErrors } from "../api/utils";
 
 // TODO: tags in the article card
 @Component({
@@ -45,7 +45,12 @@ export class ArticleList {
               })}
             </span>
           </div>
-          <button class="btn btn-outline-primary btn-sm pull-xs-right">
+          {/* TODO: favorite on click */}
+          <button
+            class={`btn btn-sm pull-xs-right ${
+              a.favorited ? "btn-primary" : "btn-outline-primary"
+            }`}
+          >
             <i class="ion-heart" /> {a.favoritesCount}
           </button>
         </div>
@@ -56,6 +61,13 @@ export class ArticleList {
           <h1>{a.title}</h1>
           <p>{a.description}</p>
           <span>Read more...</span>
+          {a.tagList && (
+            <ul class="tag-list">
+              {a.tagList.map(t => (
+                <li class="tag-default tag-pill tag-outline">{t}</li>
+              ))}
+            </ul>
+          )}
         </stencil-route-link>
       </div>
     ));

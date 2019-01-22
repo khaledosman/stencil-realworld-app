@@ -96,8 +96,8 @@ export interface IUpdateArticleProps {
 
 export const updateArticle = async ({
   slug,
+  article,
   token,
-  article
 }: IUpdateArticleProps) => {
   const articleInfo = await standardReq({
     path: `articles/${slug}`,

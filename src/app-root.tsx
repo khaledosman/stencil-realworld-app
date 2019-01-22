@@ -70,11 +70,13 @@ export class AppRoot {
               url="/profile/:username"
               component="profile-page"
               exact={true}
+              componentProps={{ user }}
             />
             <stencil-route
               url="/profile/:username/favorites"
               component="profile-page"
               exact={true}
+              componentProps={{ user }}
             />
             <stencil-route
               url="/article/:slug"
@@ -96,6 +98,7 @@ export class AppRoot {
               url={["/editor", "/editor/:slug"]}
               component={isLogged ? "editor-page" : "not-found"}
               exact={true}
+              componentProps={{ user }}
             />
             {/* Visitor-only routes? check if logged, if so, render 404 */}
             <stencil-route

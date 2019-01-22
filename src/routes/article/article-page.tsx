@@ -1,5 +1,5 @@
 import { Component, State, Prop } from "@stencil/core";
-import { MatchResults } from "@stencil/router";
+import { MatchResults, RouterHistory } from "@stencil/router";
 import marked from "marked";
 
 import {
@@ -18,9 +18,8 @@ import { IUser } from "../../api/auth";
 export class ArticlePage {
   @Prop() user?: IUser;
   @Prop() match: MatchResults;
+  @Prop() history: RouterHistory;
 
-  @State() following: boolean = false;
-  @State() favorited: boolean = false;
   @State() isLoading: boolean = true;
   @State() notFound: boolean = false;
   @State() errors?: IAPIErrors;
@@ -35,12 +34,6 @@ export class ArticlePage {
     const { success, errors, article } = articleInfo;
     if (success) {
       this.article = article;
-      if (article.favorited) {
-        this.favorited = true;
-      }
-      if (article.author.following) {
-        this.following = true;
-      }
     } else {
       this.errors = errors;
     }
@@ -68,26 +61,31 @@ export class ArticlePage {
   // Function that toggles if the article is favorited and if
   // the author is followed
   followFavorite = async (isFollow: boolean) => {
-    if (!this.article || !this.user) {
+    const { article, user } = this;
+    if (!article || !user) {
       return;
     }
-    const stateId = isFollow ? "following" : "favorited";
-    const identifier = isFollow
-      ? this.article.author.username
-      : this.article.slug;
-    const undo = this[stateId];
-    const res = isFollow
-      ? await followProfile(identifier, this.user.token, undo)
-      : await favoriteArticle(identifier, this.user.token, undo);
-    const { success } = res;
-    if (success) {
-      this[stateId] = !undo;
-      if (!isFollow) {
-        this.article = {
-          ...this.article,
-          favoritesCount: this.article.favoritesCount + (undo ? -1 : 1)
+    this.article = isFollow
+      ? {
+          ...article,
+          author: { ...article.author, following: !article.author.following }
+        }
+      : {
+          ...article,
+          favorited: !article.favorited,
+          favoritesCount: article.favoritesCount + (article.favorited ? -1 : 1)
         };
-      }
+    console.log(article);
+    const res = isFollow
+      ? await followProfile(
+          user.username,
+          this.user.token,
+          article.author.following
+        )
+      : await favoriteArticle(article.slug, this.user.token, article.favorited);
+    const { success } = res;
+    if (!success) {
+      this.article = article;
     }
   };
 
@@ -120,14 +118,12 @@ export class ArticlePage {
       return <not-found />;
     }
 
-    const { article: a, favorited, following, followFavorite } = this;
+    const { article: a, followFavorite, history, user } = this;
     const { slug } = this.match.params;
     const metaProps = {
-      author: a.author,
-      date: a.updatedAt,
-      favoritesCount: a.favoritesCount,
-      favorited,
-      following,
+      history,
+      user,
+      article: a,
       followFavorite
     };
     return (
@@ -142,6 +138,13 @@ export class ArticlePage {
         <div class="container page">
           <div class="row article-content">
             <div class="col-md-12" innerHTML={marked(a.body)} />
+            {this.article.tagList && (
+              <ul class="tag-list">
+                {this.article.tagList.map(t => (
+                  <li class="tag-default tag-pill tag-outline">{t}</li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <hr />
@@ -152,11 +155,13 @@ export class ArticlePage {
 
           <div class="row">
             <div class="col-xs-12 col-md-8 offset-md-2">
-              <comment-form
-                slug={slug}
-                user={this.user}
-                addComment={this.addComment}
-              />
+              {user ? (
+                <comment-form
+                  slug={slug}
+                  user={this.user}
+                  addComment={this.addComment}
+                />
+              ): <p><stencil-route-link url="/login">Sign in</stencil-route-link> or <stencil-route-link url="/register">sign up</stencil-route-link> to comment.</p>}
 
               {this.comments &&
                 this.comments.map(c => (

@@ -10,25 +10,28 @@ import '@stencil/core';
 import '@stencil/router';
 import '@stencil/state-tunnel';
 import {
-  IProfile,
-} from './api/profiles';
-import {
-  IUser,
-  TSignOut,
-} from './api/auth';
-import {
-  MatchResults,
-  RouterHistory,
-} from '@stencil/router';
-import {
-  IComment,
-} from './api/comments';
-import {
   IArticle,
 } from './api/articles';
 import {
   IAPIErrors,
 } from './api/utils';
+import {
+  MatchResults,
+  RouterHistory,
+} from '@stencil/router';
+import {
+  IUser,
+  TSignOut,
+} from './api/auth';
+import {
+  TTabTypes,
+} from './components/types';
+import {
+  IProfile,
+} from './api/profiles';
+import {
+  IComment,
+} from './api/comments';
 
 
 export namespace Components {
@@ -36,21 +39,26 @@ export namespace Components {
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
 
+  interface ArticleList {
+    'articles': IArticle[];
+    'errors': IAPIErrors;
+  }
+  interface ArticleListAttributes extends StencilHTMLAttributes {
+    'articles'?: IArticle[];
+    'errors'?: IAPIErrors;
+  }
+
   interface ArticleMeta {
-    'author': IProfile;
-    'date': string;
-    'favorited': boolean;
-    'favoritesCount': number;
+    'article': IArticle;
     'followFavorite': (isFollow: boolean) => void;
-    'following': boolean;
+    'history': RouterHistory;
+    'user'?: IUser;
   }
   interface ArticleMetaAttributes extends StencilHTMLAttributes {
-    'author'?: IProfile;
-    'date'?: string;
-    'favorited'?: boolean;
-    'favoritesCount'?: number;
+    'article'?: IArticle;
     'followFavorite'?: (isFollow: boolean) => void;
-    'following'?: boolean;
+    'history'?: RouterHistory;
+    'user'?: IUser;
   }
 
   interface AppFooter {}
@@ -75,11 +83,30 @@ export namespace Components {
     'history'?: RouterHistory;
   }
 
+  interface TabbedFeed {
+    'activeTag'?: string;
+    'clearTag'?: () => void;
+    'isProfile'?: boolean;
+    'possibleTabs': Array<TTabTypes>;
+    'profile'?: IProfile;
+    'user'?: IUser;
+  }
+  interface TabbedFeedAttributes extends StencilHTMLAttributes {
+    'activeTag'?: string;
+    'clearTag'?: () => void;
+    'isProfile'?: boolean;
+    'possibleTabs'?: Array<TTabTypes>;
+    'profile'?: IProfile;
+    'user'?: IUser;
+  }
+
   interface ArticlePage {
+    'history': RouterHistory;
     'match': MatchResults;
     'user'?: IUser;
   }
   interface ArticlePageAttributes extends StencilHTMLAttributes {
+    'history'?: RouterHistory;
     'match'?: MatchResults;
     'user'?: IUser;
   }
@@ -117,31 +144,19 @@ export namespace Components {
     'setUser'?: (user: IUser) => void;
   }
 
-  interface EditorPage {}
-  interface EditorPageAttributes extends StencilHTMLAttributes {}
-
-  interface ArticleList {
-    'articles': IArticle[];
-    'errors': IAPIErrors;
-  }
-  interface ArticleListAttributes extends StencilHTMLAttributes {
-    'articles'?: IArticle[];
-    'errors'?: IAPIErrors;
-  }
-
-  interface HomeFeed {
-    'activeTag'?: string;
-    'clearTag': () => void;
+  interface EditorPage {
+    'history': RouterHistory;
+    'match': MatchResults;
     'user': IUser;
   }
-  interface HomeFeedAttributes extends StencilHTMLAttributes {
-    'activeTag'?: string;
-    'clearTag'?: () => void;
+  interface EditorPageAttributes extends StencilHTMLAttributes {
+    'history'?: RouterHistory;
+    'match'?: MatchResults;
     'user'?: IUser;
   }
 
   interface HomePage {
-    'user': IUser;
+    'user'?: IUser;
   }
   interface HomePageAttributes extends StencilHTMLAttributes {
     'user'?: IUser;
@@ -176,18 +191,18 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'AppRoot': Components.AppRoot;
+    'ArticleList': Components.ArticleList;
     'ArticleMeta': Components.ArticleMeta;
     'AppFooter': Components.AppFooter;
     'AppHeader': Components.AppHeader;
     'LoadingSpinner': Components.LoadingSpinner;
     'NotFound': Components.NotFound;
+    'TabbedFeed': Components.TabbedFeed;
     'ArticlePage': Components.ArticlePage;
     'CommentForm': Components.CommentForm;
     'SingleComment': Components.SingleComment;
     'AuthPage': Components.AuthPage;
     'EditorPage': Components.EditorPage;
-    'ArticleList': Components.ArticleList;
-    'HomeFeed': Components.HomeFeed;
     'HomePage': Components.HomePage;
     'HomeTags': Components.HomeTags;
     'ProfilePage': Components.ProfilePage;
@@ -196,18 +211,18 @@ declare global {
 
   interface StencilIntrinsicElements {
     'app-root': Components.AppRootAttributes;
+    'article-list': Components.ArticleListAttributes;
     'article-meta': Components.ArticleMetaAttributes;
     'app-footer': Components.AppFooterAttributes;
     'app-header': Components.AppHeaderAttributes;
     'loading-spinner': Components.LoadingSpinnerAttributes;
     'not-found': Components.NotFoundAttributes;
+    'tabbed-feed': Components.TabbedFeedAttributes;
     'article-page': Components.ArticlePageAttributes;
     'comment-form': Components.CommentFormAttributes;
     'single-comment': Components.SingleCommentAttributes;
     'auth-page': Components.AuthPageAttributes;
     'editor-page': Components.EditorPageAttributes;
-    'article-list': Components.ArticleListAttributes;
-    'home-feed': Components.HomeFeedAttributes;
     'home-page': Components.HomePageAttributes;
     'home-tags': Components.HomeTagsAttributes;
     'profile-page': Components.ProfilePageAttributes;
@@ -219,6 +234,12 @@ declare global {
   var HTMLAppRootElement: {
     prototype: HTMLAppRootElement;
     new (): HTMLAppRootElement;
+  };
+
+  interface HTMLArticleListElement extends Components.ArticleList, HTMLStencilElement {}
+  var HTMLArticleListElement: {
+    prototype: HTMLArticleListElement;
+    new (): HTMLArticleListElement;
   };
 
   interface HTMLArticleMetaElement extends Components.ArticleMeta, HTMLStencilElement {}
@@ -251,6 +272,12 @@ declare global {
     new (): HTMLNotFoundElement;
   };
 
+  interface HTMLTabbedFeedElement extends Components.TabbedFeed, HTMLStencilElement {}
+  var HTMLTabbedFeedElement: {
+    prototype: HTMLTabbedFeedElement;
+    new (): HTMLTabbedFeedElement;
+  };
+
   interface HTMLArticlePageElement extends Components.ArticlePage, HTMLStencilElement {}
   var HTMLArticlePageElement: {
     prototype: HTMLArticlePageElement;
@@ -281,18 +308,6 @@ declare global {
     new (): HTMLEditorPageElement;
   };
 
-  interface HTMLArticleListElement extends Components.ArticleList, HTMLStencilElement {}
-  var HTMLArticleListElement: {
-    prototype: HTMLArticleListElement;
-    new (): HTMLArticleListElement;
-  };
-
-  interface HTMLHomeFeedElement extends Components.HomeFeed, HTMLStencilElement {}
-  var HTMLHomeFeedElement: {
-    prototype: HTMLHomeFeedElement;
-    new (): HTMLHomeFeedElement;
-  };
-
   interface HTMLHomePageElement extends Components.HomePage, HTMLStencilElement {}
   var HTMLHomePageElement: {
     prototype: HTMLHomePageElement;
@@ -319,18 +334,18 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement
+    'article-list': HTMLArticleListElement
     'article-meta': HTMLArticleMetaElement
     'app-footer': HTMLAppFooterElement
     'app-header': HTMLAppHeaderElement
     'loading-spinner': HTMLLoadingSpinnerElement
     'not-found': HTMLNotFoundElement
+    'tabbed-feed': HTMLTabbedFeedElement
     'article-page': HTMLArticlePageElement
     'comment-form': HTMLCommentFormElement
     'single-comment': HTMLSingleCommentElement
     'auth-page': HTMLAuthPageElement
     'editor-page': HTMLEditorPageElement
-    'article-list': HTMLArticleListElement
-    'home-feed': HTMLHomeFeedElement
     'home-page': HTMLHomePageElement
     'home-tags': HTMLHomeTagsElement
     'profile-page': HTMLProfilePageElement
@@ -339,18 +354,18 @@ declare global {
 
   interface ElementTagNameMap {
     'app-root': HTMLAppRootElement;
+    'article-list': HTMLArticleListElement;
     'article-meta': HTMLArticleMetaElement;
     'app-footer': HTMLAppFooterElement;
     'app-header': HTMLAppHeaderElement;
     'loading-spinner': HTMLLoadingSpinnerElement;
     'not-found': HTMLNotFoundElement;
+    'tabbed-feed': HTMLTabbedFeedElement;
     'article-page': HTMLArticlePageElement;
     'comment-form': HTMLCommentFormElement;
     'single-comment': HTMLSingleCommentElement;
     'auth-page': HTMLAuthPageElement;
     'editor-page': HTMLEditorPageElement;
-    'article-list': HTMLArticleListElement;
-    'home-feed': HTMLHomeFeedElement;
     'home-page': HTMLHomePageElement;
     'home-tags': HTMLHomeTagsElement;
     'profile-page': HTMLProfilePageElement;

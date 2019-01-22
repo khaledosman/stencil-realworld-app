@@ -1,23 +1,33 @@
 import { Component, Prop } from "@stencil/core";
-import { IProfile } from "../api/profiles";
+import { IUser } from "../api/auth";
+import { deleteArticle, IArticle } from "../api/articles";
+import { RouterHistory } from "@stencil/router";
 
 @Component({
   tag: "article-meta"
 })
 export class ArticleMeta {
-  @Prop() author: IProfile;
-  @Prop() date: string;
-  @Prop() favoritesCount: number;
-  @Prop() favorited: boolean;
-  @Prop() following: boolean;
+  @Prop() history: RouterHistory;
+  @Prop() user?: IUser;
+  @Prop() article: IArticle;
   @Prop() followFavorite: (isFollow: boolean) => void;
 
   followAuthor = () => this.followFavorite(true);
 
   favoriteArticle = () => this.followFavorite(false);
 
+  deleteArticle = async () => {
+    if (window.confirm("Are you sure you want to delete this article?")) {
+      await deleteArticle(this.article.slug, this.user && this.user.token);
+      // TODO: better way to redirect? Is redirecting to the user's profile ideal?
+      this.history.push(`/profile/${this.user.username}`);
+    }
+  };
+
+  // TODO: spacing between buttons
   render() {
-    const { username, image } = this.author;
+    const { author: { username, image, following }, updatedAt, slug, favorited, favoritesCount } = this.article;
+    const isOwner = this.user && username === this.user.username;
     return (
       <div class="article-meta">
         <stencil-route-link url={`/profile/${username}`}>
@@ -28,35 +38,52 @@ export class ArticleMeta {
             {username}
           </stencil-route-link>
           <span class="date">
-            {new Date(this.date).toLocaleDateString("en", {
+            {new Date(updatedAt).toLocaleDateString("en", {
               month: "long",
               day: "2-digit",
               year: "numeric"
             })}
           </span>
         </div>
-        <button
-          class={`btn btn-sm ${
-            this.following ? "btn-outline-secondary" : "btn-secondary"
-          }`}
-          aria-label={`Click to follow ${username}`}
-          onClick={this.followAuthor}
-        >
-          {this.following && <i class="ion-plus-round" />}
-          &nbsp; {this.following ? 'Follow' : 'Unfollow'} {username}
-        </button>
-        &nbsp;&nbsp;
-        <button
-          class={`btn btn-sm ${
-            this.favorited ? "btn-primary" : "btn-outline-primary"
-          }`}
-          aria-label={`Click to favorite this article`}
-          onClick={this.favoriteArticle}
-        >
-          <i class="ion-heart" />
-          &nbsp; Favorite Article{" "}
-          <span class="counter">({this.favoritesCount})</span>
-        </button>
+        {isOwner
+          ? [
+              <stencil-route-link
+                anchorClass="btn btn-outline-secondary btn-sm"
+                url={`/editor/${slug}`}
+              >
+                <i class="ion-edit" /> Edit Article
+              </stencil-route-link>,
+              <button
+                class="btn btn-outline-danger btn-sm"
+                aria-label={`Click to delete this article`}
+                onClick={this.deleteArticle}
+              >
+                <i class="ion-trash-a" /> Delete Article
+              </button>
+            ]
+          : this.user && [
+              <button
+                class={`btn btn-sm ${
+                  following ? "btn-outline-secondary" : "btn-secondary"
+                }`}
+                aria-label={`Click to follow ${username}`}
+                onClick={this.followAuthor}
+              >
+                {!following && <i class="ion-plus-round" />}
+                &nbsp; {!following ? "Follow" : "Unfollow"} {username}
+              </button>,
+              <button
+                class={`btn btn-sm ${
+                  favorited ? "btn-primary" : "btn-outline-primary"
+                }`}
+                aria-label={`Click to favorite this article`}
+                onClick={this.favoriteArticle}
+              >
+                <i class="ion-heart" />
+                &nbsp; {favorited ? "Unfavorite" : "Favorite"} Article{" "}
+                <span class="counter">({favoritesCount})</span>
+              </button>
+            ]}
       </div>
     );
   }

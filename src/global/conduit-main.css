@@ -5336,3 +5336,10 @@ footer {
   font-size: 0.6rem;
   margin-right: 5px;
   cursor: pointer; }
+
+/* CUSTOM CODE */
+button {
+  border: none;
+  font-size: 1em;
+  background: transparent;
+}
