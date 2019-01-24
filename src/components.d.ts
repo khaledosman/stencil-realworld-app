@@ -33,12 +33,14 @@ export namespace Components {
   }
 
   interface ArticleList {
-    articles: IArticle[];
     errors: IAPIErrors;
+    listedArticles: IArticle[];
+    user?: IUser;
   }
   interface ArticleListAttributes extends StencilHTMLAttributes {
-    articles?: IArticle[];
     errors?: IAPIErrors;
+    listedArticles?: IArticle[];
+    user?: IUser;
   }
 
   interface ArticleMeta {

@@ -12,9 +12,12 @@ export class SingleComment {
   @Prop() removeComment: (id: number) => void;
 
   deleteComment = async () => {
-    // TODO: prompt() before deleting
     const { user, comment, slug } = this;
-    if (!user || user.username !== comment.author.username) {
+    if (
+      !user ||
+      user.username !== comment.author.username ||
+      !window.confirm('Are you sure you want to delete your comment?')
+    ) {
       return;
     }
 

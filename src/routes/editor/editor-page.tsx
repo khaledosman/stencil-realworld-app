@@ -127,7 +127,7 @@ export class EditorPage {
       ];
     }
 
-    // TODO: tag-list
+    // TODO: dynamic tag-list
     return (
       <main class="editor-page">
         <div class="container page">

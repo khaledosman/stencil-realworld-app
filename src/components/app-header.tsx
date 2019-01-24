@@ -8,7 +8,6 @@ export class Header {
   @Prop() user?: IUser;
   @Prop() signOut: TSignOut;
 
-  // TODO: icons and style the sign-out button
   render() {
     const { user } = this;
     return (

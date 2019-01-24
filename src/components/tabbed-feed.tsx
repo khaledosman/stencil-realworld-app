@@ -146,7 +146,11 @@ export class TabbedFeed {
         <loading-spinner />
       ) : (
         [
-          <article-list articles={this.articles} errors={this.errors} />,
+          <article-list
+            listedArticles={this.articles}
+            errors={this.errors}
+            user={this.user}
+          />,
           count > perPage && (
             <ul class="pagination">
               {pagesArray.map((p, i) => (

@@ -19,11 +19,8 @@ export class AppRoot {
   signOut = () => {
     localStorage.removeItem('user');
     this.user = undefined;
-    // TODO: redirect to home
-    // A "navigate" function would be perfect here
   };
 
-  // TODO: get user on load
   getUser = async () => {
     if (!this.user || !this.user.token) {
       return;
@@ -46,6 +43,8 @@ export class AppRoot {
     }
   }
 
+  // To make sure we have the user's latest info, we fetch their profile
+  // when the app loads
   async componentDidLoad() {
     if (this.user && this.user.token) {
       this.getUser();

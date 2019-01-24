@@ -1,14 +1,57 @@
-import { Component, Prop } from '@stencil/core';
-import { IArticle } from '../api/articles';
+import { Component, Prop, State } from '@stencil/core';
+import { IArticle, favoriteArticle } from '../api/articles';
 import { IAPIErrors } from '../api/utils';
+import { IUser } from '../api/auth';
 
-// TODO: tags in the article card
 @Component({
   tag: 'article-list',
 })
 export class ArticleList {
-  @Prop() articles: IArticle[];
+  @Prop() user?: IUser;
+  @Prop() listedArticles: IArticle[];
   @Prop() errors: IAPIErrors;
+
+  @State() articles: IArticle[] = this.listedArticles;
+
+  favoriteArticle = async e => {
+    const button = e.currentTarget;
+    if (!button) {
+      return;
+    }
+
+    const slug = button.getAttribute('data-article-slug');
+    const favorited = button.getAttribute('data-article-favorited') === '1';
+    const index = parseInt(button.getAttribute('data-article-index'));
+    const token = this.user && this.user.token;
+    const { articles } = this;
+    if (!slug || !token || typeof index !== 'number') {
+      return;
+    }
+
+    // We figure out how the new article is going to look like
+    const newArticle = {
+      ...articles[index],
+      favorited: !favorited,
+      favoritesCount: articles[index].favoritesCount + (favorited ? -1 : 1),
+    };
+
+    // Then make a copy of the articles array
+    const newList = [...articles];
+    newList[index] = newArticle;
+    this.articles = newList;
+
+    // And only then do we run the server request to keep things snappy
+    const res = await favoriteArticle(slug, token, favorited);
+    if (!res.success) {
+      // If the request isn't sucessful, we return to the previous articles list
+      this.articles = articles;
+      console.error(res.errors);
+    }
+  };
+
+  componentWillLoad() {
+    this.articles = this.listedArticles;
+  }
 
   render() {
     // TODO: style error messages
@@ -23,7 +66,7 @@ export class ArticleList {
       return <p>No results found</p>;
     }
 
-    return this.articles.map(a => (
+    return this.articles.map((a, i) => (
       <div class="article-preview">
         <div class="article-meta">
           <stencil-route-link url={`/profile/${a.author.username}`}>
@@ -45,11 +88,15 @@ export class ArticleList {
               })}
             </span>
           </div>
-          {/* TODO: favorite on click */}
           <button
             class={`btn btn-sm pull-xs-right ${
               a.favorited ? 'btn-primary' : 'btn-outline-primary'
             }`}
+            data-article-slug={a.slug}
+            data-article-favorited={a.favorited ? '1' : '0'}
+            data-article-index={i}
+            disabled={!this.user}
+            onClick={this.favoriteArticle}
           >
             <i class="ion-heart" /> {a.favoritesCount}
           </button>
