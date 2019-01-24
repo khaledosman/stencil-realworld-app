@@ -1,24 +1,24 @@
-import { Component, State, Prop, Watch } from "@stencil/core";
-import { getArticleList, IArticle } from "../api/articles";
-import { IAPIErrors } from "../api/utils";
-import { IUser } from "../api/auth";
-import { TTabTypes } from "./types";
-import { IProfile } from "../api/profiles";
+import { Component, State, Prop, Watch } from '@stencil/core';
+import { getArticleList, IArticle } from '../api/articles';
+import { IAPIErrors } from '../api/utils';
+import { IUser } from '../api/auth';
+import { TTabTypes } from './types';
+import { IProfile } from '../api/profiles';
 
 const perPage = 10;
 
 const tabLabels = {
-  global: "Global Feed",
-  feed: "Your Feed",
-  authored: "My Articles",
-  favorited: "Favorited Articles"
+  global: 'Global Feed',
+  feed: 'Your Feed',
+  authored: 'My Articles',
+  favorited: 'Favorited Articles',
 };
 
 @Component({
-  tag: "tabbed-feed"
+  tag: 'tabbed-feed',
 })
 export class TabbedFeed {
-  @Prop() possibleTabs: Array<TTabTypes> = ["global"];
+  @Prop() possibleTabs: Array<TTabTypes> = ['global'];
   @Prop() user?: IUser;
   @Prop() profile?: IProfile;
   @Prop() clearTag?: () => void;
@@ -36,25 +36,25 @@ export class TabbedFeed {
     const { user } = this;
     this.isLoading = true;
     const offset =
-      this.currentPage > 0 ? `offset=${this.currentPage * perPage}&` : "";
+      this.currentPage > 0 ? `offset=${this.currentPage * perPage}&` : '';
     const tag =
-      this.activeTag && this.activeTab === "tag"
+      this.activeTag && this.activeTab === 'tag'
         ? `tag=${this.activeTag}&`
-        : "";
+        : '';
     const author =
-      this.activeTab === "authored" && this.profile
+      this.activeTab === 'authored' && this.profile
         ? `author=${this.profile.username}&`
-        : "";
+        : '';
     const favorited =
-      this.activeTab === "favorited" && this.profile
+      this.activeTab === 'favorited' && this.profile
         ? `favorited=${this.profile.username}&`
-        : "";
+        : '';
     const params = `limit=${perPage}&${offset}${tag}${author}${favorited}`;
 
     const articleList = await getArticleList({
       token: user && user.token,
-      isFeed: this.activeTab === "feed",
-      params
+      isFeed: this.activeTab === 'feed',
+      params,
     });
     const { articles, articlesCount, errors, success } = articleList;
     if (success) {
@@ -66,32 +66,32 @@ export class TabbedFeed {
     this.isLoading = false;
   };
 
-  @Watch("activeTab")
+  @Watch('activeTab')
   fetchArticles() {
-    if (this.activeTab !== "tag") {
+    if (this.activeTab !== 'tag') {
       this.clearTag && this.clearTag();
     }
     this.listArticles();
   }
 
-  @Watch("activeTag")
+  @Watch('activeTag')
   goToTagTab(newValue) {
-    if (newValue && this.activeTab !== "tag") {
-      this.activeTab = "tag";
+    if (newValue && this.activeTab !== 'tag') {
+      this.activeTab = 'tag';
     } else if (newValue) {
       this.listArticles();
     }
   }
 
   toggleTab = e => {
-    const name = e.target.getAttribute("data-tab-id");
+    const name = e.target.getAttribute('data-tab-id');
     if (name) {
       this.activeTab = name;
     }
   };
 
   goToPage = e => {
-    const num = e.target.getAttribute("data-page-num");
+    const num = e.target.getAttribute('data-page-num');
     if (num) {
       this.currentPage = parseInt(num);
       this.fetchArticles();
@@ -108,10 +108,9 @@ export class TabbedFeed {
 
   render() {
     const { activeTab, activeTag } = this;
-    const wrapperClass = this.isProfile ? "articles-toggle" : "feed-toggle";
+    const wrapperClass = this.isProfile ? 'articles-toggle' : 'feed-toggle';
     const count = this.articlesCount || 0;
     const pagesArray = Array(Math.ceil(this.articlesCount / perPage)).fill(1);
-    console.log(this.currentPage);
     return [
       <div class={wrapperClass}>
         <ul class="nav nav-pills outline-active">
@@ -120,7 +119,7 @@ export class TabbedFeed {
               <button
                 onClick={this.toggleTab}
                 data-tab-id={t}
-                class={`nav-link ${activeTab === t ? "active disabled" : ""}`}
+                class={`nav-link ${activeTab === t ? 'active disabled' : ''}`}
                 type="button"
                 aria-label={`Button to toggle your ${t} feed`}
                 disabled={activeTab === t}
@@ -133,7 +132,7 @@ export class TabbedFeed {
             <li class="nav-item">
               <span
                 class={`nav-link ${
-                  activeTab === "tag" ? "active disabled" : ""
+                  activeTab === 'tag' ? 'active disabled' : ''
                 }`}
               >
                 <i class="ion-pound" /> {activeTag}
@@ -155,7 +154,7 @@ export class TabbedFeed {
                   // The `p` below is, unfortunately, only to escape typescript's
                   // compiler, else it'll say `p` is declared but never used
                   class={`page-item ${
-                    i === this.currentPage && p ? "active" : ""
+                    i === this.currentPage && p ? 'active' : ''
                   }`}
                 >
                   <button
@@ -168,9 +167,9 @@ export class TabbedFeed {
                 </li>
               ))}
             </ul>
-          )
+          ),
         ]
-      )
+      ),
     ];
   }
 }

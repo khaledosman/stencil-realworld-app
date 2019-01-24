@@ -1,8 +1,8 @@
-import { Component, Prop, State } from "@stencil/core";
-import { IUser } from "../../api/auth";
+import { Component, Prop, State } from '@stencil/core';
+import { IUser } from '../../api/auth';
 
 @Component({
-  tag: "home-page"
+  tag: 'home-page',
 })
 export class HomePage {
   @Prop() user?: IUser;
@@ -12,6 +12,10 @@ export class HomePage {
   setTag = (tag?: string) => {
     this.activeTag = tag;
   };
+
+  componentDidLoad() {
+    document.title = 'Stencil Conduit';
+  }
 
   render() {
     return (

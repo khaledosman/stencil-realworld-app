@@ -1,10 +1,15 @@
-import { Component, Prop, State } from "@stencil/core";
-import { IHandleUserReturn, logUser, registerUser, IUser } from "../../api/auth";
-import { IAPIErrors } from "../../api/utils";
-import { MatchResults } from "@stencil/router";
+import { Component, Prop, State, Watch } from '@stencil/core';
+import {
+  IHandleUserReturn,
+  logUser,
+  registerUser,
+  IUser,
+} from '../../api/auth';
+import { IAPIErrors } from '../../api/utils';
+import { MatchResults } from '@stencil/router';
 
 @Component({
-  tag: "auth-page"
+  tag: 'auth-page',
 })
 export class AuthPage {
   @Prop() setUser: (user: IUser) => void;
@@ -35,26 +40,40 @@ export class AuthPage {
     }
 
     if (isRegister) {
-      const res = await registerUser({ name, email, password});
+      const res = await registerUser({ name, email, password });
       this.changeUserState(res);
     } else {
-      const res = await logUser({ email, password});
+      const res = await logUser({ email, password });
       this.changeUserState(res);
     }
     this.disabled = false;
   };
 
   handleChange = e => {
-    const name = e.target.getAttribute("data-auth-id");
+    const name = e.target.getAttribute('data-auth-id');
     const value = e.target.value;
     if (name && value) {
       this[name] = value;
     }
   };
 
+  setPageTitle = () => {
+    const isRegister = this.match.url.match(/\/register/i);
+    document.title = `${isRegister ? 'Sign Up' : 'Sign In'} - Stencil Conduit`;
+  };
+
+  @Watch('match')
+  updateTitle() {
+    this.setPageTitle();
+  }
+
+  componentDidLoad() {
+    this.setPageTitle();
+  }
+
   render() {
     const isRegister = this.match.url.match(/\/register/i);
-    const title = `Sign ${isRegister ? "up" : "in"}`;
+    const title = `Sign ${isRegister ? 'up' : 'in'}`;
     return (
       <main class="auth-page">
         <div class="container page">
@@ -62,17 +81,17 @@ export class AuthPage {
             <div class="col-md-6 offset-md-3 col-xs-12">
               <h1 class="text-xs-center">{title}</h1>
               <p class="text-xs-center">
-                <stencil-route-link url={isRegister ? "/login" : "/register"}>
-                  {isRegister ? "Have an account?" : "Need an account?"}
+                <stencil-route-link url={isRegister ? '/login' : '/register'}>
+                  {isRegister ? 'Have an account?' : 'Need an account?'}
                 </stencil-route-link>
               </p>
 
               {/* TODO: error handling */}
-              {this.errors ?
+              {this.errors ? (
                 <ul class="error-messages">
                   <li>{JSON.stringify(this.errors)}</li>
                 </ul>
-              : null}
+              ) : null}
 
               <form onSubmit={this.handleSubmit}>
                 {isRegister && (

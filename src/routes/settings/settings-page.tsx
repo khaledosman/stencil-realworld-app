@@ -1,49 +1,55 @@
-import { Component, Prop, State } from "@stencil/core";
-import { IAPIErrors } from "../../api/utils";
-import { updateUser, IUserUpdate, IUser } from "../../api/auth";
+import { Component, Prop, State } from '@stencil/core';
+import { IAPIErrors } from '../../api/utils';
+import { updateUser, IUserUpdate, IUser } from '../../api/auth';
 
 const inputFields = [
-  { id: "image", placeholder: "URL of profile picture", type: "text" },
-  { id: "username", placeholder: "Your Name", type: "text", required: true },
+  { id: 'image', placeholder: 'URL of profile picture', type: 'text' },
+  { id: 'username', placeholder: 'Your Name', type: 'text', required: true },
   {
-    id: "bio",
-    placeholder: "Short bio about you",
+    id: 'bio',
+    placeholder: 'Short bio about you',
     isTextArea: true,
-    type: "text"
+    type: 'text',
   },
-  { id: "email", placeholder: "Email", type: "email", required: true },
-  { id: "password", placeholder: "Password", type: "password" }
+  { id: 'email', placeholder: 'Email', type: 'email', required: true },
+  { id: 'password', placeholder: 'Password', type: 'password' },
 ];
 
 @Component({
-  tag: "settings-page"
+  tag: 'settings-page',
 })
 export class SettingsPage {
   @Prop() setUser: (user: IUser) => void;
   @Prop() user: IUser;
 
-  @State() username: string = "";
-  @State() email: string = "";
-  @State() bio: string = "";
-  @State() image: string = "";
-  @State() password: string = "";
+  @State() username: string = '';
+  @State() email: string = '';
+  @State() bio: string = '';
+  @State() image: string = '';
+  @State() password: string = '';
   @State() disabled: boolean = false;
   @State() errors?: IAPIErrors;
 
   handleSubmit = async e => {
     e.preventDefault();
     this.disabled = true;
-    const { username, email, image, bio, user: { token } } = this;
+    const {
+      username,
+      email,
+      image,
+      bio,
+      user: { token },
+    } = this;
     if (!username || !email) {
-      return
-    };
+      return;
+    }
     const user: IUserUpdate = {
       username,
       email,
       password: this.password || undefined,
       image,
       bio,
-    }
+    };
     const res = await updateUser(user, token);
     if (res.success && res.user) {
       this.setUser(res.user);
@@ -54,7 +60,7 @@ export class SettingsPage {
   };
 
   handleChange = e => {
-    const name = e.target.getAttribute("data-settings-id");
+    const name = e.target.getAttribute('data-settings-id');
     const value = e.target.value;
     if (name && value) {
       this[name] = value;
@@ -66,6 +72,7 @@ export class SettingsPage {
     this.email = this.user.email;
     this.bio = this.user.bio;
     this.image = this.user.image;
+    document.title = 'Settings - Stencil Conduit';
   }
 
   render() {
@@ -76,22 +83,22 @@ export class SettingsPage {
             <div class="col-md-6 offset-md-3 col-xs-12">
               <h1 class="text-xs-center">Your Settings</h1>
               {/* TODO: error handling */}
-              {this.errors ?
+              {this.errors ? (
                 <ul class="error-messages">
                   <li>{JSON.stringify(this.errors)}</li>
                 </ul>
-              : null}
+              ) : null}
               <form onSubmit={this.handleSubmit}>
                 <fieldset disabled={this.disabled}>
                   {inputFields.map(i => {
                     const props = {
-                      class: "form-control form-control-lg",
+                      class: 'form-control form-control-lg',
                       placeholder: i.placeholder,
-                      type: i.type || "text",
+                      type: i.type || 'text',
                       value: this[i.id],
                       onInput: this.handleChange,
                       required: i.required || false,
-                      "data-settings-id": i.id,
+                      'data-settings-id': i.id,
                     };
                     return (
                       <fieldset class="form-group">
@@ -103,9 +110,7 @@ export class SettingsPage {
                       </fieldset>
                     );
                   })}
-                  <button
-                    class="btn btn-lg btn-primary pull-xs-right"
-                  >
+                  <button class="btn btn-lg btn-primary pull-xs-right">
                     Update Settings
                   </button>
                 </fieldset>

@@ -1,53 +1,53 @@
-import { Component, State, Prop } from "@stencil/core";
-import { RouterHistory, MatchResults } from "@stencil/router";
+import { Component, State, Prop } from '@stencil/core';
+import { RouterHistory, MatchResults } from '@stencil/router';
 import {
   createArticle,
   IArticle,
   getSingleArticle,
-  updateArticle
-} from "../../api/articles";
-import { IUser } from "../../api/auth";
-import { IAPIErrors } from "../../api/utils";
+  updateArticle,
+} from '../../api/articles';
+import { IUser } from '../../api/auth';
+import { IAPIErrors } from '../../api/utils';
 
 const inputFields = [
-  { id: "title", placeholder: "Article Title", required: true, large: true },
+  { id: 'title', placeholder: 'Article Title', required: true, large: true },
   {
-    id: "description",
+    id: 'description',
     placeholder: "What's this article about",
-    required: true
+    required: true,
   },
   {
-    id: "body",
-    placeholder: "Write your article (in markdown)",
+    id: 'body',
+    placeholder: 'Write your article (in markdown)',
     isTextArea: true,
-    required: true
+    required: true,
   },
   {
-    id: "tags",
-    placeholder: "Enter tags (separated by comma)",
-    required: true
-  }
+    id: 'tags',
+    placeholder: 'Enter tags (separated by comma)',
+    required: true,
+  },
 ];
 
 @Component({
-  tag: "editor-page"
+  tag: 'editor-page',
 })
 export class EditorPage {
   @Prop() user: IUser;
   @Prop() history: RouterHistory;
   @Prop() match: MatchResults;
 
-  @State() title: string = "";
-  @State() description: string = "";
-  @State() body: string = "";
-  @State() tags: string = "";
+  @State() title: string = '';
+  @State() description: string = '';
+  @State() body: string = '';
+  @State() tags: string = '';
   @State() disabled: boolean = false;
   @State() isLoading: boolean = false;
   @State() errors?: IAPIErrors;
   @State() article?: IArticle;
 
   handleChange = e => {
-    const name = e.target.getAttribute("data-settings-id");
+    const name = e.target.getAttribute('data-settings-id');
     const value = e.target.value;
     if (name && value) {
       this[name] = value;
@@ -62,7 +62,7 @@ export class EditorPage {
       this.disabled = false;
       return;
     }
-    const tagList = tags.split(",").map(t => t.trim());
+    const tagList = tags.split(',').map(t => t.trim());
     const newArticle = { title, description, body, tagList };
 
     // If we're editing a specific article, we want to use its slug to
@@ -71,7 +71,7 @@ export class EditorPage {
       ? await updateArticle({
           slug: article.slug,
           token: user && user.token,
-          article
+          article,
         })
       : await createArticle(newArticle, user.token);
     const { success, errors } = res;
@@ -96,6 +96,7 @@ export class EditorPage {
   }
 
   async componentDidLoad() {
+    document.title = 'Editor - Stencil Conduit';
     const { slug } = this.match.params;
     if (slug && this.isLoading) {
       const res = await getSingleArticle(slug, this.user && this.user.token);
@@ -105,7 +106,7 @@ export class EditorPage {
         this.title = article.title;
         this.description = article.description;
         this.body = article.body;
-        this.tags = article.tagList.join(" , ");
+        this.tags = article.tagList.join(' , ');
       } else {
         this.errors = errors;
       }
@@ -117,12 +118,12 @@ export class EditorPage {
     if (this.isLoading) {
       return <loading-spinner />;
     }
-  
+
     // TODO: error-handling
     if (this.errors) {
       return [
         <h1>Something went wrong</h1>,
-        <code>{JSON.stringify(this.errors)}</code>
+        <code>{JSON.stringify(this.errors)}</code>,
       ];
     }
 
@@ -136,13 +137,13 @@ export class EditorPage {
                 <fieldset disabled={this.disabled}>
                   {inputFields.map(i => {
                     const props = {
-                      class: `form-control ${i.large ? "form-control-lg" : ""}`,
+                      class: `form-control ${i.large ? 'form-control-lg' : ''}`,
                       placeholder: i.placeholder,
-                      type: "text",
+                      type: 'text',
                       value: this[i.id],
                       onInput: this.handleChange,
                       required: i.required || false,
-                      "data-settings-id": i.id
+                      'data-settings-id': i.id,
                     };
                     return (
                       <fieldset class="form-group">

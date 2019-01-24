@@ -1,11 +1,11 @@
-import { Component, Prop, State } from "@stencil/core";
-import { MatchResults } from "@stencil/router";
-import { IAPIErrors } from "../../api/utils";
-import { IProfile, getProfile, followProfile } from "../../api/profiles";
-import { IUser } from "../../api/auth";
+import { Component, Prop, State } from '@stencil/core';
+import { MatchResults } from '@stencil/router';
+import { IAPIErrors } from '../../api/utils';
+import { IProfile, getProfile, followProfile } from '../../api/profiles';
+import { IUser } from '../../api/auth';
 
 @Component({
-  tag: "profile-page"
+  tag: 'profile-page',
 })
 export class ProfilePage {
   @Prop() match: MatchResults;
@@ -19,6 +19,7 @@ export class ProfilePage {
 
   fetchProfile = async () => {
     const { username } = this.match.params;
+    document.title = `${username}'s profile - Stencil Conduit`;
     if (!username) {
       this.notFound = true;
       this.isLoading = false;
@@ -40,12 +41,12 @@ export class ProfilePage {
       return;
     }
     // `profile` is the current profile image
-    // We want to invert its `following` property right away while we fetch 
+    // We want to invert its `following` property right away while we fetch
     // the followProfile request. Only if this return errors will we revert it
     this.profile = {
       ...profile,
       following: !profile.following,
-    }
+    };
     const res = await followProfile(
       profile.username,
       user.token,
@@ -71,7 +72,7 @@ export class ProfilePage {
     if (this.errors) {
       return [
         <h1>Something went wrong</h1>,
-        <code>{JSON.stringify(this.errors)}</code>
+        <code>{JSON.stringify(this.errors)}</code>,
       ];
     }
 
@@ -92,12 +93,12 @@ export class ProfilePage {
                 {this.user && this.user.username !== username && (
                   <button
                     class={`btn btn-sm action-btn ${
-                      following ? "btn-secondary" : "btn-outline-secondary"
+                      following ? 'btn-secondary' : 'btn-outline-secondary'
                     }`}
                     onClick={this.followProfile}
                   >
                     {!following && <i class="ion-plus-round" />}
-                    &nbsp; {following ? "Unfollow" : "Follow"} {username}
+                    &nbsp; {following ? 'Unfollow' : 'Follow'} {username}
                   </button>
                 )}
               </div>
@@ -114,7 +115,7 @@ export class ProfilePage {
                 profile={this.profile}
                 possibleTabs={['authored', 'favorited']}
                 isProfile={true}
-               />
+              />
             </div>
           </div>
         </div>

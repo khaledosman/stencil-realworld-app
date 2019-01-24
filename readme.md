@@ -10,8 +10,6 @@ So far, I've got all the templates and proper auth in place. You can already reg
 
 - Error handling for forms (displaying them for users)
 - Testing
-- Loading component
-- Changing the document's title according to current page
 - See these and some other minor changes by searching for comments containing `TODO:`
 
 <!-- ### [Demo](https://github.com/gothinkster/realworld)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
@@ -31,4 +29,3 @@ For more information on how to this works with other frontends/backends, head ov
 # Getting started
 
 > npm install, npm start, etc. -->
-

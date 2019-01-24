@@ -1,19 +1,19 @@
-import { Component, State, Prop } from "@stencil/core";
-import { MatchResults, RouterHistory } from "@stencil/router";
-import marked from "marked";
+import { Component, State, Prop } from '@stencil/core';
+import { MatchResults, RouterHistory } from '@stencil/router';
+import marked from 'marked';
 
 import {
   IArticle,
   getSingleArticle,
-  favoriteArticle
-} from "../../api/articles";
-import { IAPIErrors } from "../../api/utils";
-import { IComment, getCommentsList } from "../../api/comments";
-import { followProfile } from "../../api/profiles";
-import { IUser } from "../../api/auth";
+  favoriteArticle,
+} from '../../api/articles';
+import { IAPIErrors } from '../../api/utils';
+import { IComment, getCommentsList } from '../../api/comments';
+import { followProfile } from '../../api/profiles';
+import { IUser } from '../../api/auth';
 
 @Component({
-  tag: "article-page"
+  tag: 'article-page',
 })
 export class ArticlePage {
   @Prop() user?: IUser;
@@ -34,6 +34,7 @@ export class ArticlePage {
     const { success, errors, article } = articleInfo;
     if (success) {
       this.article = article;
+      document.title = `${article.title} - Stencil Conduit`;
     } else {
       this.errors = errors;
     }
@@ -68,14 +69,13 @@ export class ArticlePage {
     this.article = isFollow
       ? {
           ...article,
-          author: { ...article.author, following: !article.author.following }
+          author: { ...article.author, following: !article.author.following },
         }
       : {
           ...article,
           favorited: !article.favorited,
-          favoritesCount: article.favoritesCount + (article.favorited ? -1 : 1)
+          favoritesCount: article.favoritesCount + (article.favorited ? -1 : 1),
         };
-    console.log(article);
     const res = isFollow
       ? await followProfile(
           user.username,
@@ -110,7 +110,7 @@ export class ArticlePage {
     if (this.errors) {
       return [
         <h1>Something went wrong</h1>,
-        <code>{JSON.stringify(this.errors)}</code>
+        <code>{JSON.stringify(this.errors)}</code>,
       ];
     }
 
@@ -124,7 +124,7 @@ export class ArticlePage {
       history,
       user,
       article: a,
-      followFavorite
+      followFavorite,
     };
     return (
       <main class="article-page">
@@ -161,7 +161,16 @@ export class ArticlePage {
                   user={this.user}
                   addComment={this.addComment}
                 />
-              ): <p><stencil-route-link url="/login">Sign in</stencil-route-link> or <stencil-route-link url="/register">sign up</stencil-route-link> to comment.</p>}
+              ) : (
+                <p>
+                  <stencil-route-link url="/login">Sign in</stencil-route-link>{' '}
+                  or{' '}
+                  <stencil-route-link url="/register">
+                    sign up
+                  </stencil-route-link>{' '}
+                  to comment.
+                </p>
+              )}
 
               {this.comments &&
                 this.comments.map(c => (

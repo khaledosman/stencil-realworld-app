@@ -1,8 +1,8 @@
-import { Component, Prop } from "@stencil/core";
-import { TSignOut, IUser } from "../api/auth";
+import { Component, Prop } from '@stencil/core';
+import { TSignOut, IUser } from '../api/auth';
 
 @Component({
-  tag: "app-header"
+  tag: 'app-header',
 })
 export class Header {
   @Prop() user?: IUser;
@@ -52,10 +52,7 @@ export class Header {
                     </stencil-route-link>
                   </li>,
                   <li class="nav-item">
-                    <button
-                      class="nav-link"
-                      onClick={this.signOut}
-                    >
+                    <button class="nav-link" onClick={this.signOut}>
                       Sign out
                     </button>
                   </li>,
@@ -78,7 +75,7 @@ export class Header {
                     >
                       Sign up
                     </stencil-route-link>
-                  </li>
+                  </li>,
                 ]}
           </ul>
         </div>
