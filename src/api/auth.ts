@@ -1,4 +1,4 @@
-import { standardReq, IBaseAPIReq } from "./utils";
+import { standardReq, IBaseAPIReq } from './utils';
 
 export interface IUser {
   id: number;
@@ -38,31 +38,31 @@ const handleUserReturn = ({ user, errors }: IUserInfo) => {
     success: user && user.username ? true : false,
     user,
     errors,
-  }
-}
+  };
+};
 
 export const logUser = async (user: ISignInCredentials) => {
   const userInfo = await standardReq({
-    path: "users/login",
+    path: 'users/login',
     body: JSON.stringify({ user }),
-    method: "POST"
+    method: 'POST',
   });
   return handleUserReturn(userInfo);
 };
 
 export const registerUser = async (user: IRegisterCredentials) => {
   const userInfo = await standardReq({
-    path: "users",
+    path: 'users',
     body: JSON.stringify({ user }),
-    method: "POST"
+    method: 'POST',
   });
   return handleUserReturn(userInfo);
 };
 
 export const getUser = async (token: string) => {
   const userInfo = await standardReq({
-    path: "user",
-    method: "GET",
+    path: 'user',
+    method: 'GET',
     token,
   });
   return handleUserReturn(userInfo);
@@ -78,10 +78,10 @@ export interface IUserUpdate {
 
 export const updateUser = async (user: IUserUpdate, token: string) => {
   const userInfo = await standardReq({
-    path: "user",
-    method: "PUT",
+    path: 'user',
+    method: 'PUT',
     token,
-    body: JSON.stringify({ user })
+    body: JSON.stringify({ user }),
   });
   return handleUserReturn(userInfo);
-}
+};

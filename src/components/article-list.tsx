@@ -1,10 +1,10 @@
-import { Component, Prop } from "@stencil/core";
-import { IArticle } from "../api/articles";
-import { IAPIErrors } from "../api/utils";
+import { Component, Prop } from '@stencil/core';
+import { IArticle } from '../api/articles';
+import { IAPIErrors } from '../api/utils';
 
 // TODO: tags in the article card
 @Component({
-  tag: "article-list"
+  tag: 'article-list',
 })
 export class ArticleList {
   @Prop() articles: IArticle[];
@@ -15,7 +15,7 @@ export class ArticleList {
     if (this.errors || !Array.isArray(this.articles)) {
       return [
         <p>There was an error fetching recent articles, details below</p>,
-        <code>{JSON.stringify(this.errors)}</code>
+        <code>{JSON.stringify(this.errors)}</code>,
       ];
     }
 
@@ -38,17 +38,17 @@ export class ArticleList {
             </stencil-route-link>
             {/* TODO: figure out if it's updated or created at */}
             <span class="date">
-              {new Date(a.updatedAt).toLocaleDateString("en", {
-                month: "long",
-                day: "2-digit",
-                year: "numeric"
+              {new Date(a.updatedAt).toLocaleDateString('en', {
+                month: 'long',
+                day: '2-digit',
+                year: 'numeric',
               })}
             </span>
           </div>
           {/* TODO: favorite on click */}
           <button
             class={`btn btn-sm pull-xs-right ${
-              a.favorited ? "btn-primary" : "btn-outline-primary"
+              a.favorited ? 'btn-primary' : 'btn-outline-primary'
             }`}
           >
             <i class="ion-heart" /> {a.favoritesCount}

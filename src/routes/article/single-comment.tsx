@@ -1,9 +1,9 @@
-import { Component, Prop } from "@stencil/core";
-import { IComment, deleteComment } from "../../api/comments";
-import { IUser } from "../../api/auth";
+import { Component, Prop } from '@stencil/core';
+import { IComment, deleteComment } from '../../api/comments';
+import { IUser } from '../../api/auth';
 
 @Component({
-  tag: "single-comment"
+  tag: 'single-comment',
 })
 export class SingleComment {
   @Prop() user: IUser;
@@ -43,9 +43,9 @@ export class SingleComment {
           </stencil-route-link>
           <span class="date-posted">Dec 29th</span>
           <span class="date-posted">
-            {new Date(updatedAt).toLocaleDateString("en", {
-              month: "short",
-              day: "numeric"
+            {new Date(updatedAt).toLocaleDateString('en', {
+              month: 'short',
+              day: 'numeric',
             })}
           </span>
           {this.user && this.user.username === author.username && (

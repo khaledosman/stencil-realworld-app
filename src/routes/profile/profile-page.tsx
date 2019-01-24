@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, Watch } from '@stencil/core';
 import { MatchResults } from '@stencil/router';
 import { IAPIErrors } from '../../api/utils';
 import { IProfile, getProfile, followProfile } from '../../api/profiles';
@@ -18,6 +18,7 @@ export class ProfilePage {
   @State() profile?: IProfile;
 
   fetchProfile = async () => {
+    this.isLoading = true;
     const { username } = this.match.params;
     document.title = `${username}'s profile - Stencil Conduit`;
     if (!username) {
@@ -58,6 +59,11 @@ export class ProfilePage {
       this.profile = profile;
     }
   };
+
+  @Watch('match')
+  getNewUser() {
+    this.fetchProfile();
+  }
 
   componentDidLoad() {
     this.fetchProfile();

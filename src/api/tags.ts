@@ -1,4 +1,4 @@
-import { IBaseAPIReq, standardReq } from "./utils";
+import { IBaseAPIReq, standardReq } from './utils';
 
 interface ITagList extends IBaseAPIReq {
   tags?: string[];
@@ -14,6 +14,6 @@ export const getTags = async () => {
   return {
     success: Array.isArray(tags) ? true : false,
     tags,
-    errors
+    errors,
   };
-}
+};

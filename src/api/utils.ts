@@ -1,4 +1,4 @@
-export const endpoint = "https://conduit.productionready.io/api";
+export const endpoint = 'https://conduit.productionready.io/api';
 
 // TODO: get all known errors
 export type TEmailPswdErrors = 'is invalid';
@@ -6,7 +6,7 @@ export type TUsernameErrors = 'has already been taken';
 
 export interface IAPIErrors {
   'email or password': Array<TEmailPswdErrors>;
-  'username': Array<TUsernameErrors>;
+  username: Array<TUsernameErrors>;
   [key: string]: string[];
 }
 
@@ -16,7 +16,7 @@ export interface IBaseAPIReq {
 
 export interface IStandardReq {
   path: string;
-  method: "GET" | "PUT" | "POST" | "DELETE";
+  method: 'GET' | 'PUT' | 'POST' | 'DELETE';
   body?: string;
   token?: string;
 }
@@ -25,22 +25,22 @@ export const standardReq = async ({
   path,
   method,
   body,
-  token
+  token,
 }: IStandardReq) => {
   const reqPath = `${endpoint}/${path}`;
   let headers: { [key: string]: string } = {
-    "content-type": "application/json"
+    'content-type': 'application/json',
   };
   if (token) {
     headers = { ...headers, authorization: `Token ${token}` };
   }
   try {
     const req = await fetch(reqPath, {
-      credentials: "omit",
+      credentials: 'omit',
       headers,
       method,
       body,
-      mode: "cors"
+      mode: 'cors',
     });
     const data = await req.json();
     return data;

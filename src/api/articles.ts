@@ -1,5 +1,5 @@
-import { standardReq, IBaseAPIReq } from "./utils";
-import { IProfile } from "./profiles";
+import { standardReq, IBaseAPIReq } from './utils';
+import { IProfile } from './profiles';
 
 export interface IArticle {
   title: string;
@@ -28,19 +28,19 @@ interface IArticleList extends IBaseAPIReq {
 export const getArticleList = async ({
   params,
   token,
-  isFeed
+  isFeed,
 }: IGetArticleListProps) => {
   const articleList: IArticleList = await standardReq({
-    path: `articles${isFeed ? "/feed" : ''}${params && `?${params}`}`,
-    method: "GET",
-    token
+    path: `articles${isFeed ? '/feed' : ''}${params && `?${params}`}`,
+    method: 'GET',
+    token,
   });
   const { articles, articlesCount, errors } = articleList;
   return {
     success: Array.isArray(articles) ? true : false,
     articles,
     articlesCount,
-    errors
+    errors,
   };
 };
 
@@ -49,13 +49,13 @@ export const getArticleList = async ({
 export const deleteArticle = async (slug: string, token: string) => {
   const articleInfo: IBaseAPIReq = await standardReq({
     path: `articles/${slug}`,
-    method: "DELETE",
-    token
+    method: 'DELETE',
+    token,
   });
   const { errors } = articleInfo;
   return {
-    success: typeof errors === "undefined",
-    errors
+    success: typeof errors === 'undefined',
+    errors,
   };
 };
 
@@ -68,15 +68,15 @@ const handleSingleArticleReturn = ({ article, errors }: ISingleArticle) => {
   return {
     success: article && article.slug ? true : false,
     article,
-    errors
+    errors,
   };
 };
 
 export const getSingleArticle = async (slug: string, token?: string) => {
   const articleInfo = await standardReq({
     path: `articles/${slug}`,
-    method: "GET",
-    token
+    method: 'GET',
+    token,
   });
   return handleSingleArticleReturn(articleInfo);
 };
@@ -101,19 +101,19 @@ export const updateArticle = async ({
 }: IUpdateArticleProps) => {
   const articleInfo = await standardReq({
     path: `articles/${slug}`,
-    method: "PUT",
+    method: 'PUT',
     token,
-    body: JSON.stringify({ article })
+    body: JSON.stringify({ article }),
   });
   return handleSingleArticleReturn(articleInfo);
 };
 
 export const createArticle = async (article: IArticleUpdate, token: string) => {
   const articleInfo = await standardReq({
-    path: "articles",
-    method: "POST",
+    path: 'articles',
+    method: 'POST',
     token,
-    body: JSON.stringify({ article })
+    body: JSON.stringify({ article }),
   });
 
   return handleSingleArticleReturn(articleInfo);
@@ -126,8 +126,8 @@ export const favoriteArticle = async (
 ) => {
   const articleInfo = await standardReq({
     path: `articles/${slug}/favorite`,
-    method: isUnfavorite ? "DELETE" : "POST",
-    token
+    method: isUnfavorite ? 'DELETE' : 'POST',
+    token,
   });
 
   return handleSingleArticleReturn(articleInfo);

@@ -1,17 +1,17 @@
-import { Component, State, Prop } from "@stencil/core";
-import { createComment, IComment } from "../../api/comments";
-import { IAPIErrors } from "../../api/utils";
-import { IUser } from "../../api/auth";
+import { Component, State, Prop } from '@stencil/core';
+import { createComment, IComment } from '../../api/comments';
+import { IAPIErrors } from '../../api/utils';
+import { IUser } from '../../api/auth';
 
 @Component({
-  tag: "comment-form"
+  tag: 'comment-form',
 })
 export class CommentForm {
   @Prop() user: IUser;
   @Prop() slug: string;
   @Prop() addComment: (comment: IComment) => void;
 
-  @State() body: string = "";
+  @State() body: string = '';
   @State() disabled: boolean = false;
   @State() errors: IAPIErrors;
 
@@ -29,7 +29,7 @@ export class CommentForm {
     );
     const { comment, errors, success } = commentInfo;
     if (success) {
-      this.body = "";
+      this.body = '';
       this.addComment(comment);
     } else {
       this.errors = errors;
@@ -49,7 +49,7 @@ export class CommentForm {
 
     if (!this.user) {
       <p>
-        Please <stencil-route-link url="/login">sign in</stencil-route-link> or{" "}
+        Please <stencil-route-link url="/login">sign in</stencil-route-link> or{' '}
         <stencil-route-link url="/register">register</stencil-route-link> to
         comment.
       </p>;
@@ -69,10 +69,7 @@ export class CommentForm {
             />
           </div>
           <div class="card-footer">
-            <img
-              src={this.user.image}
-              class="comment-author-img"
-            />
+            <img src={this.user.image} class="comment-author-img" />
             <button class="btn btn-sm btn-primary" type="submit">
               Post Comment
             </button>

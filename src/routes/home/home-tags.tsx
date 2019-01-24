@@ -1,8 +1,8 @@
-import { Component, State, Prop } from "@stencil/core";
-import { getTags } from "../../api/tags";
+import { Component, State, Prop } from '@stencil/core';
+import { getTags } from '../../api/tags';
 
 @Component({
-  tag: "home-tags"
+  tag: 'home-tags',
 })
 export class HomeTags {
   @Prop() setTag: (tag: string) => void;
@@ -19,7 +19,7 @@ export class HomeTags {
   };
 
   handleClick = e => {
-    const name = e.target.getAttribute("data-tag-id");
+    const name = e.target.getAttribute('data-tag-id');
     if (name) {
       this.setTag(name);
     }

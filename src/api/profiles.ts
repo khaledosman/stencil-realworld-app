@@ -1,4 +1,4 @@
-import { standardReq, IBaseAPIReq } from "./utils";
+import { standardReq, IBaseAPIReq } from './utils';
 
 export interface IProfile {
   username: string;
@@ -16,8 +16,8 @@ const handleProfileReturn = ({ profile, errors }: IProfileInfo) => {
     success: profile && profile.username ? true : false,
     profile,
     errors,
-  }
-}
+  };
+};
 
 export const getProfile = async (username: string, token?: string) => {
   const profileInfo = await standardReq({
@@ -26,13 +26,17 @@ export const getProfile = async (username: string, token?: string) => {
     token,
   });
   return handleProfileReturn(profileInfo);
-}
+};
 
-export const followProfile = async (username: string, token: string, unfollow?: boolean) => {
+export const followProfile = async (
+  username: string,
+  token: string,
+  unfollow?: boolean
+) => {
   const profileInfo = await standardReq({
     path: `profiles/${username}/follow`,
     method: unfollow ? 'DELETE' : 'POST',
     token,
   });
   return handleProfileReturn(profileInfo);
-}
+};

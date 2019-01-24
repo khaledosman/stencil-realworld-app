@@ -1,11 +1,11 @@
-import { Component, State } from "@stencil/core";
-import "@stencil/router";
+import { Component, State } from '@stencil/core';
+import '@stencil/router';
 
-import { getUser, IUser } from "./api/auth";
-import { IAPIErrors } from "./api/utils";
+import { getUser, IUser } from './api/auth';
+import { IAPIErrors } from './api/utils';
 
 @Component({
-  tag: "app-root"
+  tag: 'app-root',
 })
 export class AppRoot {
   @State() user: IUser;
@@ -13,11 +13,11 @@ export class AppRoot {
 
   setUser = (user: IUser) => {
     this.user = user;
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
   signOut = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
     this.user = undefined;
     // TODO: redirect to home
     // A "navigate" function would be perfect here
@@ -31,7 +31,7 @@ export class AppRoot {
     const res = await getUser(this.user.token);
     if (res.success) {
       this.user = res.user;
-      localStorage.setItem("user", JSON.stringify(res.user));
+      localStorage.setItem('user', JSON.stringify(res.user));
     } else {
       this.errors = res.errors;
       // When we fail to get a user, this could mean their token has expired, // so, as a guarantee, we sign them out
@@ -40,7 +40,7 @@ export class AppRoot {
   };
 
   componentWillLoad() {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem('user');
     if (user) {
       this.user = JSON.parse(user);
     }
@@ -73,12 +73,6 @@ export class AppRoot {
               componentProps={{ user }}
             />
             <stencil-route
-              url="/profile/:username/favorites"
-              component="profile-page"
-              exact={true}
-              componentProps={{ user }}
-            />
-            <stencil-route
               url="/article/:slug"
               component="article-page"
               exact={true}
@@ -87,23 +81,23 @@ export class AppRoot {
             {/* Protected routes check if logged, else render 404 */}
             <stencil-route
               url="/settings"
-              component={isLogged ? "settings-page" : "not-found"}
+              component={isLogged ? 'settings-page' : 'not-found'}
               exact={true}
               componentProps={{
                 setUser: this.setUser,
-                user
+                user,
               }}
             />
             <stencil-route
-              url={["/editor", "/editor/:slug"]}
-              component={isLogged ? "editor-page" : "not-found"}
+              url={['/editor', '/editor/:slug']}
+              component={isLogged ? 'editor-page' : 'not-found'}
               exact={true}
               componentProps={{ user }}
             />
             {/* Visitor-only routes? check if logged, if so, render 404 */}
             <stencil-route
-              url={["/login", "/register"]}
-              component={isLogged ? "not-found" : "auth-page"}
+              url={['/login', '/register']}
+              component={isLogged ? 'not-found' : 'auth-page'}
               componentProps={{ setUser: this.setUser }}
               exact={true}
             />

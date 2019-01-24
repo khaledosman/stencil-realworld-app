@@ -1,10 +1,10 @@
-import { Component, Prop } from "@stencil/core";
-import { IUser } from "../api/auth";
-import { deleteArticle, IArticle } from "../api/articles";
-import { RouterHistory } from "@stencil/router";
+import { Component, Prop } from '@stencil/core';
+import { IUser } from '../api/auth';
+import { deleteArticle, IArticle } from '../api/articles';
+import { RouterHistory } from '@stencil/router';
 
 @Component({
-  tag: "article-meta"
+  tag: 'article-meta',
 })
 export class ArticleMeta {
   @Prop() history: RouterHistory;
@@ -17,7 +17,7 @@ export class ArticleMeta {
   favoriteArticle = () => this.followFavorite(false);
 
   deleteArticle = async () => {
-    if (window.confirm("Are you sure you want to delete this article?")) {
+    if (window.confirm('Are you sure you want to delete this article?')) {
       await deleteArticle(this.article.slug, this.user && this.user.token);
       // TODO: better way to redirect? Is redirecting to the user's profile ideal?
       this.history.push(`/profile/${this.user.username}`);
@@ -26,7 +26,13 @@ export class ArticleMeta {
 
   // TODO: spacing between buttons
   render() {
-    const { author: { username, image, following }, updatedAt, slug, favorited, favoritesCount } = this.article;
+    const {
+      author: { username, image, following },
+      updatedAt,
+      slug,
+      favorited,
+      favoritesCount,
+    } = this.article;
     const isOwner = this.user && username === this.user.username;
     return (
       <div class="article-meta">
@@ -38,10 +44,10 @@ export class ArticleMeta {
             {username}
           </stencil-route-link>
           <span class="date">
-            {new Date(updatedAt).toLocaleDateString("en", {
-              month: "long",
-              day: "2-digit",
-              year: "numeric"
+            {new Date(updatedAt).toLocaleDateString('en', {
+              month: 'long',
+              day: '2-digit',
+              year: 'numeric',
             })}
           </span>
         </div>
@@ -59,30 +65,30 @@ export class ArticleMeta {
                 onClick={this.deleteArticle}
               >
                 <i class="ion-trash-a" /> Delete Article
-              </button>
+              </button>,
             ]
           : this.user && [
               <button
                 class={`btn btn-sm ${
-                  following ? "btn-outline-secondary" : "btn-secondary"
+                  following ? 'btn-outline-secondary' : 'btn-secondary'
                 }`}
                 aria-label={`Click to follow ${username}`}
                 onClick={this.followAuthor}
               >
                 {!following && <i class="ion-plus-round" />}
-                &nbsp; {!following ? "Follow" : "Unfollow"} {username}
+                &nbsp; {!following ? 'Follow' : 'Unfollow'} {username}
               </button>,
               <button
                 class={`btn btn-sm ${
-                  favorited ? "btn-primary" : "btn-outline-primary"
+                  favorited ? 'btn-primary' : 'btn-outline-primary'
                 }`}
                 aria-label={`Click to favorite this article`}
                 onClick={this.favoriteArticle}
               >
                 <i class="ion-heart" />
-                &nbsp; {favorited ? "Unfavorite" : "Favorite"} Article{" "}
+                &nbsp; {favorited ? 'Unfavorite' : 'Favorite'} Article{' '}
                 <span class="counter">({favoritesCount})</span>
-              </button>
+              </button>,
             ]}
       </div>
     );
