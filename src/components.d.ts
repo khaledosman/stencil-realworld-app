@@ -7,7 +7,6 @@
 import '@stencil/core';
 
 import '@stencil/router';
-import '@stencil/state-tunnel';
 import { IUser, TSignOut } from './api/auth';
 import { IArticle } from './api/articles';
 import { IAPIErrors } from './api/utils';
