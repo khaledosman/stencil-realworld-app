@@ -2,8 +2,6 @@
 
 > ### Stencil codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
-**⚠ THIS IS A WORK IN PROGRESS**
-
 So far, I've got all the templates and proper auth in place. You can already register, log-in and change your settings.
 
 ### [Demo](https://stencil-realworld.netlify.com)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
