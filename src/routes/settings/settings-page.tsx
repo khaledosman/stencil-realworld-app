@@ -82,12 +82,7 @@ export class SettingsPage {
           <div class="row">
             <div class="col-md-6 offset-md-3 col-xs-12">
               <h1 class="text-xs-center">Your Settings</h1>
-              {/* TODO: error handling */}
-              {this.errors ? (
-                <ul class="error-messages">
-                  <li>{JSON.stringify(this.errors)}</li>
-                </ul>
-              ) : null}
+              <error-display errors={this.errors} />
               <form onSubmit={this.handleSubmit}>
                 <fieldset disabled={this.disabled}>
                   {inputFields.map(i => {

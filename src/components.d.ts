@@ -56,6 +56,13 @@ export namespace Components {
     user?: IUser;
   }
 
+  interface ErrorDisplay {
+    errors?: IAPIErrors;
+  }
+  interface ErrorDisplayAttributes extends StencilHTMLAttributes {
+    errors?: IAPIErrors;
+  }
+
   interface LoadingSpinner {}
   interface LoadingSpinnerAttributes extends StencilHTMLAttributes {}
 
@@ -178,6 +185,7 @@ declare global {
     AppHeader: Components.AppHeader;
     ArticleList: Components.ArticleList;
     ArticleMeta: Components.ArticleMeta;
+    ErrorDisplay: Components.ErrorDisplay;
     LoadingSpinner: Components.LoadingSpinner;
     NotFound: Components.NotFound;
     TabbedFeed: Components.TabbedFeed;
@@ -198,6 +206,7 @@ declare global {
     'app-header': Components.AppHeaderAttributes;
     'article-list': Components.ArticleListAttributes;
     'article-meta': Components.ArticleMetaAttributes;
+    'error-display': Components.ErrorDisplayAttributes;
     'loading-spinner': Components.LoadingSpinnerAttributes;
     'not-found': Components.NotFoundAttributes;
     'tabbed-feed': Components.TabbedFeedAttributes;
@@ -248,6 +257,14 @@ declare global {
   var HTMLArticleMetaElement: {
     prototype: HTMLArticleMetaElement;
     new (): HTMLArticleMetaElement;
+  };
+
+  interface HTMLErrorDisplayElement
+    extends Components.ErrorDisplay,
+      HTMLStencilElement {}
+  var HTMLErrorDisplayElement: {
+    prototype: HTMLErrorDisplayElement;
+    new (): HTMLErrorDisplayElement;
   };
 
   interface HTMLLoadingSpinnerElement
@@ -352,6 +369,7 @@ declare global {
     'app-header': HTMLAppHeaderElement;
     'article-list': HTMLArticleListElement;
     'article-meta': HTMLArticleMetaElement;
+    'error-display': HTMLErrorDisplayElement;
     'loading-spinner': HTMLLoadingSpinnerElement;
     'not-found': HTMLNotFoundElement;
     'tabbed-feed': HTMLTabbedFeedElement;
@@ -372,6 +390,7 @@ declare global {
     'app-header': HTMLAppHeaderElement;
     'article-list': HTMLArticleListElement;
     'article-meta': HTMLArticleMetaElement;
+    'error-display': HTMLErrorDisplayElement;
     'loading-spinner': HTMLLoadingSpinnerElement;
     'not-found': HTMLNotFoundElement;
     'tabbed-feed': HTMLTabbedFeedElement;

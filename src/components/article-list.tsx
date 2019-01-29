@@ -54,11 +54,10 @@ export class ArticleList {
   }
 
   render() {
-    // TODO: style error messages
     if (this.errors || !Array.isArray(this.articles)) {
       return [
         <p>There was an error fetching recent articles, details below</p>,
-        <code>{JSON.stringify(this.errors)}</code>,
+        <error-display errors={this.errors} />,
       ];
     }
 
@@ -79,7 +78,6 @@ export class ArticleList {
             >
               {a.author.username}
             </stencil-route-link>
-            {/* TODO: figure out if it's updated or created at */}
             <span class="date">
               {new Date(a.updatedAt).toLocaleDateString('en', {
                 month: 'long',

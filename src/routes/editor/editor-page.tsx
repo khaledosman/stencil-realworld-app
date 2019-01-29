@@ -76,7 +76,7 @@ export class EditorPage {
       : await createArticle(newArticle, user.token);
     const { success, errors } = res;
     if (success) {
-      // TODO: avoid unnecessary requests by including the article info
+      // TODO (optional): avoid unnecessary requests by including the article info
       // in the history transition
       this.history.push(`/article/${res.article.slug}`);
     } else {
@@ -119,11 +119,10 @@ export class EditorPage {
       return <loading-spinner />;
     }
 
-    // TODO: error-handling
     if (this.errors) {
       return [
         <h1>Something went wrong</h1>,
-        <code>{JSON.stringify(this.errors)}</code>,
+        <error-display errors={this.errors} />,
       ];
     }
 

@@ -22,7 +22,6 @@ export class SingleComment {
     }
 
     const res = await deleteComment(slug, comment.id, user.token);
-    // TODO: error handling
     if (res.success) {
       this.removeComment(comment.id);
     }

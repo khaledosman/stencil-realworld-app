@@ -19,12 +19,10 @@ export class ArticleMeta {
   deleteArticle = async () => {
     if (window.confirm('Are you sure you want to delete this article?')) {
       await deleteArticle(this.article.slug, this.user && this.user.token);
-      // TODO: better way to redirect? Is redirecting to the user's profile ideal?
       this.history.push(`/profile/${this.user.username}`);
     }
   };
 
-  // TODO: spacing between buttons
   render() {
     const {
       author: { username, image, following },

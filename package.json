@@ -10,7 +10,7 @@
     "format": "prettier --write src/**/*.{ts,tsx}"
   },
   "dependencies": {
-    "@stencil/core": "^0.17.0-1",
+    "@stencil/core": "^0.17.0",
     "@stencil/router": "^0.3.2",
     "marked": "^0.6.0"
   },

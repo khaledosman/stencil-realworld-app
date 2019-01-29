@@ -42,17 +42,18 @@ export class CommentForm {
   };
 
   render() {
-    // TODO: error-handling
     if (this.errors) {
-      return <code>{JSON.stringify(this.errors)}</code>;
+      return <error-display errors={this.errors} />;
     }
 
     if (!this.user) {
-      <p>
-        Please <stencil-route-link url="/login">sign in</stencil-route-link> or{' '}
-        <stencil-route-link url="/register">register</stencil-route-link> to
-        comment.
-      </p>;
+      return (
+        <p>
+          Please <stencil-route-link url="/login">sign in</stencil-route-link>{' '}
+          or <stencil-route-link url="/register">register</stencil-route-link>{' '}
+          to comment.
+        </p>
+      );
     }
 
     return (

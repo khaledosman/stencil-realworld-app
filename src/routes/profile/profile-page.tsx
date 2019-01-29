@@ -74,11 +74,10 @@ export class ProfilePage {
       return <loading-spinner />;
     }
 
-    // TODO: error-handling
     if (this.errors) {
       return [
         <h1>Something went wrong</h1>,
-        <code>{JSON.stringify(this.errors)}</code>,
+        <error-display errors={this.errors} />,
       ];
     }
 

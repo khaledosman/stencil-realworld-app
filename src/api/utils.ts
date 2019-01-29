@@ -1,12 +1,17 @@
 export const endpoint = 'https://conduit.productionready.io/api';
 
-// TODO: get all known errors
-export type TEmailPswdErrors = 'is invalid';
-export type TUsernameErrors = 'has already been taken';
+// --------------------
+// The example below is how you could type all your possible errors
+// for handling them individually in your front-end. In Conduit's case,
+// we're only rendering the errors with their corresponding key, so this is
+// not necessary
+// --------------------
+// export type TEmailPswdErrors = 'is invalid';
+// export type TUsernameErrors = 'has already been taken';
 
 export interface IAPIErrors {
-  'email or password': Array<TEmailPswdErrors>;
-  username: Array<TUsernameErrors>;
+  // 'email or password': Array<TEmailPswdErrors>;
+  // username: Array<TUsernameErrors>;
   [key: string]: string[];
 }
 

@@ -11,7 +11,6 @@ export class HomeTags {
 
   listTags = async () => {
     const tagList = await getTags();
-    // TODO: maybe add error handling here?
     const { success, tags } = tagList;
     if (success) {
       this.tags = tags;

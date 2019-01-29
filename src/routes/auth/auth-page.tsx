@@ -86,12 +86,7 @@ export class AuthPage {
                 </stencil-route-link>
               </p>
 
-              {/* TODO: error handling */}
-              {this.errors ? (
-                <ul class="error-messages">
-                  <li>{JSON.stringify(this.errors)}</li>
-                </ul>
-              ) : null}
+              <error-display errors={this.errors} />
 
               <form onSubmit={this.handleSubmit}>
                 {isRegister && (
