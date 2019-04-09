@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, h } from '@stencil/core';
 
 // If I wanted to isolate the CSS applied to this component from the rest of
 // the stylesheet, I could use `shadow: true` in the @Component options ;)

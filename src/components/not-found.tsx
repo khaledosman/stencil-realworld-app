@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { RouterHistory } from '@stencil/router';
 
 // This is a stub for a not-found page, in case the RealWorld

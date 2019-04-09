@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { IArticle, favoriteArticle } from '../api/articles';
 import { IAPIErrors } from '../api/utils';
 import { IUser } from '../api/auth';
