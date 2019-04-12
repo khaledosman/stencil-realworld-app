@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Watch } from '@stencil/core';
 import {
   IHandleUserReturn,
   logUser,

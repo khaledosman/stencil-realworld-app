@@ -4,74 +4,80 @@
  * It contains typing information for all components that exist in this project.
  */
 
-import '@stencil/core';
-
-import '@stencil/router';
+import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
+import { JSX } from '@stencil/core';
 import { IUser, TSignOut } from './api/auth';
 import { IArticle } from './api/articles';
 import { IAPIErrors } from './api/utils';
 import { MatchResults, RouterHistory } from '@stencil/router';
+import { IComment } from './api/comments';
 import { TTabTypes } from './components/types';
 import { IProfile } from './api/profiles';
-import { IComment } from './api/comments';
 
 export namespace Components {
-  interface AppRoot {}
-  interface AppRootAttributes extends StencilHTMLAttributes {}
-
   interface AppFooter {}
-  interface AppFooterAttributes extends StencilHTMLAttributes {}
-
   interface AppHeader {
     signOut: TSignOut;
     user?: IUser;
   }
-  interface AppHeaderAttributes extends StencilHTMLAttributes {
-    signOut?: TSignOut;
-    user?: IUser;
-  }
-
+  interface AppRoot {}
   interface ArticleList {
     errors: IAPIErrors;
     listedArticles: IArticle[];
     user?: IUser;
   }
-  interface ArticleListAttributes extends StencilHTMLAttributes {
-    errors?: IAPIErrors;
-    listedArticles?: IArticle[];
-    user?: IUser;
-  }
-
   interface ArticleMeta {
     article: IArticle;
     followFavorite: (isFollow: boolean) => void;
     history: RouterHistory;
     user?: IUser;
   }
-  interface ArticleMetaAttributes extends StencilHTMLAttributes {
-    article?: IArticle;
-    followFavorite?: (isFollow: boolean) => void;
-    history?: RouterHistory;
+  interface ArticlePage {
+    history: RouterHistory;
+    match: MatchResults;
     user?: IUser;
   }
-
+  interface AuthPage {
+    match: MatchResults;
+    setUser: (user: IUser) => void;
+  }
+  interface CommentForm {
+    addComment: (comment: IComment) => void;
+    slug: string;
+    user: IUser;
+  }
+  interface EditorPage {
+    history: RouterHistory;
+    match: MatchResults;
+    user: IUser;
+  }
   interface ErrorDisplay {
     errors?: IAPIErrors;
   }
-  interface ErrorDisplayAttributes extends StencilHTMLAttributes {
-    errors?: IAPIErrors;
+  interface HomePage {
+    user?: IUser;
   }
-
+  interface HomeTags {
+    setTag: (tag: string) => void;
+  }
   interface LoadingSpinner {}
-  interface LoadingSpinnerAttributes extends StencilHTMLAttributes {}
-
   interface NotFound {
     history: RouterHistory;
   }
-  interface NotFoundAttributes extends StencilHTMLAttributes {
-    history?: RouterHistory;
+  interface ProfilePage {
+    match: MatchResults;
+    user?: IUser;
   }
-
+  interface SettingsPage {
+    setUser: (user: IUser) => void;
+    user: IUser;
+  }
+  interface SingleComment {
+    comment: IComment;
+    removeComment: (id: number) => void;
+    slug: string;
+    user: IUser;
+  }
   interface TabbedFeed {
     activeTag?: string;
     clearTag?: () => void;
@@ -80,7 +86,73 @@ export namespace Components {
     profile?: IProfile;
     user?: IUser;
   }
-  interface TabbedFeedAttributes extends StencilHTMLAttributes {
+}
+
+declare namespace LocalJSX {
+  interface AppFooter extends JSXBase.HTMLAttributes {}
+  interface AppHeader extends JSXBase.HTMLAttributes {
+    signOut?: TSignOut;
+    user?: IUser;
+  }
+  interface AppRoot extends JSXBase.HTMLAttributes {}
+  interface ArticleList extends JSXBase.HTMLAttributes {
+    errors?: IAPIErrors;
+    listedArticles?: IArticle[];
+    user?: IUser;
+  }
+  interface ArticleMeta extends JSXBase.HTMLAttributes {
+    article?: IArticle;
+    followFavorite?: (isFollow: boolean) => void;
+    history?: RouterHistory;
+    user?: IUser;
+  }
+  interface ArticlePage extends JSXBase.HTMLAttributes {
+    history?: RouterHistory;
+    match?: MatchResults;
+    user?: IUser;
+  }
+  interface AuthPage extends JSXBase.HTMLAttributes {
+    match?: MatchResults;
+    setUser?: (user: IUser) => void;
+  }
+  interface CommentForm extends JSXBase.HTMLAttributes {
+    addComment?: (comment: IComment) => void;
+    slug?: string;
+    user?: IUser;
+  }
+  interface EditorPage extends JSXBase.HTMLAttributes {
+    history?: RouterHistory;
+    match?: MatchResults;
+    user?: IUser;
+  }
+  interface ErrorDisplay extends JSXBase.HTMLAttributes {
+    errors?: IAPIErrors;
+  }
+  interface HomePage extends JSXBase.HTMLAttributes {
+    user?: IUser;
+  }
+  interface HomeTags extends JSXBase.HTMLAttributes {
+    setTag?: (tag: string) => void;
+  }
+  interface LoadingSpinner extends JSXBase.HTMLAttributes {}
+  interface NotFound extends JSXBase.HTMLAttributes {
+    history?: RouterHistory;
+  }
+  interface ProfilePage extends JSXBase.HTMLAttributes {
+    match?: MatchResults;
+    user?: IUser;
+  }
+  interface SettingsPage extends JSXBase.HTMLAttributes {
+    setUser?: (user: IUser) => void;
+    user?: IUser;
+  }
+  interface SingleComment extends JSXBase.HTMLAttributes {
+    comment?: IComment;
+    removeComment?: (id: number) => void;
+    slug?: string;
+    user?: IUser;
+  }
+  interface TabbedFeed extends JSXBase.HTMLAttributes {
     activeTag?: string;
     clearTag?: () => void;
     isProfile?: boolean;
@@ -89,143 +161,58 @@ export namespace Components {
     user?: IUser;
   }
 
-  interface ArticlePage {
-    history: RouterHistory;
-    match: MatchResults;
-    user?: IUser;
-  }
-  interface ArticlePageAttributes extends StencilHTMLAttributes {
-    history?: RouterHistory;
-    match?: MatchResults;
-    user?: IUser;
-  }
-
-  interface CommentForm {
-    addComment: (comment: IComment) => void;
-    slug: string;
-    user: IUser;
-  }
-  interface CommentFormAttributes extends StencilHTMLAttributes {
-    addComment?: (comment: IComment) => void;
-    slug?: string;
-    user?: IUser;
-  }
-
-  interface SingleComment {
-    comment: IComment;
-    removeComment: (id: number) => void;
-    slug: string;
-    user: IUser;
-  }
-  interface SingleCommentAttributes extends StencilHTMLAttributes {
-    comment?: IComment;
-    removeComment?: (id: number) => void;
-    slug?: string;
-    user?: IUser;
+  interface ElementInterfaces {
+    AppFooter: Components.AppFooter;
+    AppHeader: Components.AppHeader;
+    AppRoot: Components.AppRoot;
+    ArticleList: Components.ArticleList;
+    ArticleMeta: Components.ArticleMeta;
+    ArticlePage: Components.ArticlePage;
+    AuthPage: Components.AuthPage;
+    CommentForm: Components.CommentForm;
+    EditorPage: Components.EditorPage;
+    ErrorDisplay: Components.ErrorDisplay;
+    HomePage: Components.HomePage;
+    HomeTags: Components.HomeTags;
+    LoadingSpinner: Components.LoadingSpinner;
+    NotFound: Components.NotFound;
+    ProfilePage: Components.ProfilePage;
+    SettingsPage: Components.SettingsPage;
+    SingleComment: Components.SingleComment;
+    TabbedFeed: Components.TabbedFeed;
   }
 
-  interface AuthPage {
-    match: MatchResults;
-    setUser: (user: IUser) => void;
+  interface IntrinsicElements {
+    AppFooter: LocalJSX.AppFooter;
+    AppHeader: LocalJSX.AppHeader;
+    AppRoot: LocalJSX.AppRoot;
+    ArticleList: LocalJSX.ArticleList;
+    ArticleMeta: LocalJSX.ArticleMeta;
+    ArticlePage: LocalJSX.ArticlePage;
+    AuthPage: LocalJSX.AuthPage;
+    CommentForm: LocalJSX.CommentForm;
+    EditorPage: LocalJSX.EditorPage;
+    ErrorDisplay: LocalJSX.ErrorDisplay;
+    HomePage: LocalJSX.HomePage;
+    HomeTags: LocalJSX.HomeTags;
+    LoadingSpinner: LocalJSX.LoadingSpinner;
+    NotFound: LocalJSX.NotFound;
+    ProfilePage: LocalJSX.ProfilePage;
+    SettingsPage: LocalJSX.SettingsPage;
+    SingleComment: LocalJSX.SingleComment;
+    TabbedFeed: LocalJSX.TabbedFeed;
   }
-  interface AuthPageAttributes extends StencilHTMLAttributes {
-    match?: MatchResults;
-    setUser?: (user: IUser) => void;
-  }
+}
+export { LocalJSX as JSX };
 
-  interface EditorPage {
-    history: RouterHistory;
-    match: MatchResults;
-    user: IUser;
-  }
-  interface EditorPageAttributes extends StencilHTMLAttributes {
-    history?: RouterHistory;
-    match?: MatchResults;
-    user?: IUser;
-  }
-
-  interface HomePage {
-    user?: IUser;
-  }
-  interface HomePageAttributes extends StencilHTMLAttributes {
-    user?: IUser;
-  }
-
-  interface HomeTags {
-    setTag: (tag: string) => void;
-  }
-  interface HomeTagsAttributes extends StencilHTMLAttributes {
-    setTag?: (tag: string) => void;
-  }
-
-  interface ProfilePage {
-    match: MatchResults;
-    user?: IUser;
-  }
-  interface ProfilePageAttributes extends StencilHTMLAttributes {
-    match?: MatchResults;
-    user?: IUser;
-  }
-
-  interface SettingsPage {
-    setUser: (user: IUser) => void;
-    user: IUser;
-  }
-  interface SettingsPageAttributes extends StencilHTMLAttributes {
-    setUser?: (user: IUser) => void;
-    user?: IUser;
+declare module '@stencil/core' {
+  export namespace JSX {
+    interface ElementInterfaces extends LocalJSX.ElementInterfaces {}
+    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
   }
 }
 
 declare global {
-  interface StencilElementInterfaces {
-    AppRoot: Components.AppRoot;
-    AppFooter: Components.AppFooter;
-    AppHeader: Components.AppHeader;
-    ArticleList: Components.ArticleList;
-    ArticleMeta: Components.ArticleMeta;
-    ErrorDisplay: Components.ErrorDisplay;
-    LoadingSpinner: Components.LoadingSpinner;
-    NotFound: Components.NotFound;
-    TabbedFeed: Components.TabbedFeed;
-    ArticlePage: Components.ArticlePage;
-    CommentForm: Components.CommentForm;
-    SingleComment: Components.SingleComment;
-    AuthPage: Components.AuthPage;
-    EditorPage: Components.EditorPage;
-    HomePage: Components.HomePage;
-    HomeTags: Components.HomeTags;
-    ProfilePage: Components.ProfilePage;
-    SettingsPage: Components.SettingsPage;
-  }
-
-  interface StencilIntrinsicElements {
-    'app-root': Components.AppRootAttributes;
-    'app-footer': Components.AppFooterAttributes;
-    'app-header': Components.AppHeaderAttributes;
-    'article-list': Components.ArticleListAttributes;
-    'article-meta': Components.ArticleMetaAttributes;
-    'error-display': Components.ErrorDisplayAttributes;
-    'loading-spinner': Components.LoadingSpinnerAttributes;
-    'not-found': Components.NotFoundAttributes;
-    'tabbed-feed': Components.TabbedFeedAttributes;
-    'article-page': Components.ArticlePageAttributes;
-    'comment-form': Components.CommentFormAttributes;
-    'single-comment': Components.SingleCommentAttributes;
-    'auth-page': Components.AuthPageAttributes;
-    'editor-page': Components.EditorPageAttributes;
-    'home-page': Components.HomePageAttributes;
-    'home-tags': Components.HomeTagsAttributes;
-    'profile-page': Components.ProfilePageAttributes;
-    'settings-page': Components.SettingsPageAttributes;
-  }
-
-  interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
-  var HTMLAppRootElement: {
-    prototype: HTMLAppRootElement;
-    new (): HTMLAppRootElement;
-  };
-
   interface HTMLAppFooterElement
     extends Components.AppFooter,
       HTMLStencilElement {}
@@ -240,6 +227,12 @@ declare global {
   var HTMLAppHeaderElement: {
     prototype: HTMLAppHeaderElement;
     new (): HTMLAppHeaderElement;
+  };
+
+  interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
+  var HTMLAppRootElement: {
+    prototype: HTMLAppRootElement;
+    new (): HTMLAppRootElement;
   };
 
   interface HTMLArticleListElement
@@ -258,60 +251,12 @@ declare global {
     new (): HTMLArticleMetaElement;
   };
 
-  interface HTMLErrorDisplayElement
-    extends Components.ErrorDisplay,
-      HTMLStencilElement {}
-  var HTMLErrorDisplayElement: {
-    prototype: HTMLErrorDisplayElement;
-    new (): HTMLErrorDisplayElement;
-  };
-
-  interface HTMLLoadingSpinnerElement
-    extends Components.LoadingSpinner,
-      HTMLStencilElement {}
-  var HTMLLoadingSpinnerElement: {
-    prototype: HTMLLoadingSpinnerElement;
-    new (): HTMLLoadingSpinnerElement;
-  };
-
-  interface HTMLNotFoundElement
-    extends Components.NotFound,
-      HTMLStencilElement {}
-  var HTMLNotFoundElement: {
-    prototype: HTMLNotFoundElement;
-    new (): HTMLNotFoundElement;
-  };
-
-  interface HTMLTabbedFeedElement
-    extends Components.TabbedFeed,
-      HTMLStencilElement {}
-  var HTMLTabbedFeedElement: {
-    prototype: HTMLTabbedFeedElement;
-    new (): HTMLTabbedFeedElement;
-  };
-
   interface HTMLArticlePageElement
     extends Components.ArticlePage,
       HTMLStencilElement {}
   var HTMLArticlePageElement: {
     prototype: HTMLArticlePageElement;
     new (): HTMLArticlePageElement;
-  };
-
-  interface HTMLCommentFormElement
-    extends Components.CommentForm,
-      HTMLStencilElement {}
-  var HTMLCommentFormElement: {
-    prototype: HTMLCommentFormElement;
-    new (): HTMLCommentFormElement;
-  };
-
-  interface HTMLSingleCommentElement
-    extends Components.SingleComment,
-      HTMLStencilElement {}
-  var HTMLSingleCommentElement: {
-    prototype: HTMLSingleCommentElement;
-    new (): HTMLSingleCommentElement;
   };
 
   interface HTMLAuthPageElement
@@ -322,12 +267,28 @@ declare global {
     new (): HTMLAuthPageElement;
   };
 
+  interface HTMLCommentFormElement
+    extends Components.CommentForm,
+      HTMLStencilElement {}
+  var HTMLCommentFormElement: {
+    prototype: HTMLCommentFormElement;
+    new (): HTMLCommentFormElement;
+  };
+
   interface HTMLEditorPageElement
     extends Components.EditorPage,
       HTMLStencilElement {}
   var HTMLEditorPageElement: {
     prototype: HTMLEditorPageElement;
     new (): HTMLEditorPageElement;
+  };
+
+  interface HTMLErrorDisplayElement
+    extends Components.ErrorDisplay,
+      HTMLStencilElement {}
+  var HTMLErrorDisplayElement: {
+    prototype: HTMLErrorDisplayElement;
+    new (): HTMLErrorDisplayElement;
   };
 
   interface HTMLHomePageElement
@@ -346,6 +307,22 @@ declare global {
     new (): HTMLHomeTagsElement;
   };
 
+  interface HTMLLoadingSpinnerElement
+    extends Components.LoadingSpinner,
+      HTMLStencilElement {}
+  var HTMLLoadingSpinnerElement: {
+    prototype: HTMLLoadingSpinnerElement;
+    new (): HTMLLoadingSpinnerElement;
+  };
+
+  interface HTMLNotFoundElement
+    extends Components.NotFound,
+      HTMLStencilElement {}
+  var HTMLNotFoundElement: {
+    prototype: HTMLNotFoundElement;
+    new (): HTMLNotFoundElement;
+  };
+
   interface HTMLProfilePageElement
     extends Components.ProfilePage,
       HTMLStencilElement {}
@@ -362,53 +339,60 @@ declare global {
     new (): HTMLSettingsPageElement;
   };
 
+  interface HTMLSingleCommentElement
+    extends Components.SingleComment,
+      HTMLStencilElement {}
+  var HTMLSingleCommentElement: {
+    prototype: HTMLSingleCommentElement;
+    new (): HTMLSingleCommentElement;
+  };
+
+  interface HTMLTabbedFeedElement
+    extends Components.TabbedFeed,
+      HTMLStencilElement {}
+  var HTMLTabbedFeedElement: {
+    prototype: HTMLTabbedFeedElement;
+    new (): HTMLTabbedFeedElement;
+  };
   interface HTMLElementTagNameMap {
-    'app-root': HTMLAppRootElement;
     'app-footer': HTMLAppFooterElement;
     'app-header': HTMLAppHeaderElement;
+    'app-root': HTMLAppRootElement;
     'article-list': HTMLArticleListElement;
     'article-meta': HTMLArticleMetaElement;
-    'error-display': HTMLErrorDisplayElement;
-    'loading-spinner': HTMLLoadingSpinnerElement;
-    'not-found': HTMLNotFoundElement;
-    'tabbed-feed': HTMLTabbedFeedElement;
     'article-page': HTMLArticlePageElement;
-    'comment-form': HTMLCommentFormElement;
-    'single-comment': HTMLSingleCommentElement;
     'auth-page': HTMLAuthPageElement;
+    'comment-form': HTMLCommentFormElement;
     'editor-page': HTMLEditorPageElement;
+    'error-display': HTMLErrorDisplayElement;
     'home-page': HTMLHomePageElement;
     'home-tags': HTMLHomeTagsElement;
+    'loading-spinner': HTMLLoadingSpinnerElement;
+    'not-found': HTMLNotFoundElement;
     'profile-page': HTMLProfilePageElement;
     'settings-page': HTMLSettingsPageElement;
+    'single-comment': HTMLSingleCommentElement;
+    'tabbed-feed': HTMLTabbedFeedElement;
   }
 
   interface ElementTagNameMap {
-    'app-root': HTMLAppRootElement;
     'app-footer': HTMLAppFooterElement;
     'app-header': HTMLAppHeaderElement;
+    'app-root': HTMLAppRootElement;
     'article-list': HTMLArticleListElement;
     'article-meta': HTMLArticleMetaElement;
-    'error-display': HTMLErrorDisplayElement;
-    'loading-spinner': HTMLLoadingSpinnerElement;
-    'not-found': HTMLNotFoundElement;
-    'tabbed-feed': HTMLTabbedFeedElement;
     'article-page': HTMLArticlePageElement;
-    'comment-form': HTMLCommentFormElement;
-    'single-comment': HTMLSingleCommentElement;
     'auth-page': HTMLAuthPageElement;
+    'comment-form': HTMLCommentFormElement;
     'editor-page': HTMLEditorPageElement;
+    'error-display': HTMLErrorDisplayElement;
     'home-page': HTMLHomePageElement;
     'home-tags': HTMLHomeTagsElement;
+    'loading-spinner': HTMLLoadingSpinnerElement;
+    'not-found': HTMLNotFoundElement;
     'profile-page': HTMLProfilePageElement;
     'settings-page': HTMLSettingsPageElement;
+    'single-comment': HTMLSingleCommentElement;
+    'tabbed-feed': HTMLTabbedFeedElement;
   }
-
-  export namespace JSX {
-    export interface Element {}
-    export interface IntrinsicElements extends StencilIntrinsicElements {
-      [tagName: string]: any;
-    }
-  }
-  export interface HTMLAttributes extends StencilHTMLAttributes {}
 }

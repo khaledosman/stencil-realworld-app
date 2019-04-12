@@ -1,4 +1,4 @@
-import { Component, State, Prop } from '@stencil/core';
+import { Component, State, h, Prop } from '@stencil/core';
 import { RouterHistory, MatchResults } from '@stencil/router';
 import {
   createArticle,

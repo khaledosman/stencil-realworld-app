@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { IUser } from '../api/auth';
 import { deleteArticle, IArticle } from '../api/articles';
 import { RouterHistory } from '@stencil/router';
