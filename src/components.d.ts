@@ -5,7 +5,6 @@
  */
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-import { JSX } from '@stencil/core';
 import { IUser, TSignOut } from './api/auth';
 import { IArticle } from './api/articles';
 import { IAPIErrors } from './api/utils';
@@ -85,130 +84,6 @@ export namespace Components {
     possibleTabs: Array<TTabTypes>;
     profile?: IProfile;
     user?: IUser;
-  }
-}
-
-declare namespace LocalJSX {
-  interface AppFooter extends JSXBase.HTMLAttributes {}
-  interface AppHeader extends JSXBase.HTMLAttributes {
-    signOut?: TSignOut;
-    user?: IUser;
-  }
-  interface AppRoot extends JSXBase.HTMLAttributes {}
-  interface ArticleList extends JSXBase.HTMLAttributes {
-    errors?: IAPIErrors;
-    listedArticles?: IArticle[];
-    user?: IUser;
-  }
-  interface ArticleMeta extends JSXBase.HTMLAttributes {
-    article?: IArticle;
-    followFavorite?: (isFollow: boolean) => void;
-    history?: RouterHistory;
-    user?: IUser;
-  }
-  interface ArticlePage extends JSXBase.HTMLAttributes {
-    history?: RouterHistory;
-    match?: MatchResults;
-    user?: IUser;
-  }
-  interface AuthPage extends JSXBase.HTMLAttributes {
-    match?: MatchResults;
-    setUser?: (user: IUser) => void;
-  }
-  interface CommentForm extends JSXBase.HTMLAttributes {
-    addComment?: (comment: IComment) => void;
-    slug?: string;
-    user?: IUser;
-  }
-  interface EditorPage extends JSXBase.HTMLAttributes {
-    history?: RouterHistory;
-    match?: MatchResults;
-    user?: IUser;
-  }
-  interface ErrorDisplay extends JSXBase.HTMLAttributes {
-    errors?: IAPIErrors;
-  }
-  interface HomePage extends JSXBase.HTMLAttributes {
-    user?: IUser;
-  }
-  interface HomeTags extends JSXBase.HTMLAttributes {
-    setTag?: (tag: string) => void;
-  }
-  interface LoadingSpinner extends JSXBase.HTMLAttributes {}
-  interface NotFound extends JSXBase.HTMLAttributes {
-    history?: RouterHistory;
-  }
-  interface ProfilePage extends JSXBase.HTMLAttributes {
-    match?: MatchResults;
-    user?: IUser;
-  }
-  interface SettingsPage extends JSXBase.HTMLAttributes {
-    setUser?: (user: IUser) => void;
-    user?: IUser;
-  }
-  interface SingleComment extends JSXBase.HTMLAttributes {
-    comment?: IComment;
-    removeComment?: (id: number) => void;
-    slug?: string;
-    user?: IUser;
-  }
-  interface TabbedFeed extends JSXBase.HTMLAttributes {
-    activeTag?: string;
-    clearTag?: () => void;
-    isProfile?: boolean;
-    possibleTabs?: Array<TTabTypes>;
-    profile?: IProfile;
-    user?: IUser;
-  }
-
-  interface ElementInterfaces {
-    AppFooter: Components.AppFooter;
-    AppHeader: Components.AppHeader;
-    AppRoot: Components.AppRoot;
-    ArticleList: Components.ArticleList;
-    ArticleMeta: Components.ArticleMeta;
-    ArticlePage: Components.ArticlePage;
-    AuthPage: Components.AuthPage;
-    CommentForm: Components.CommentForm;
-    EditorPage: Components.EditorPage;
-    ErrorDisplay: Components.ErrorDisplay;
-    HomePage: Components.HomePage;
-    HomeTags: Components.HomeTags;
-    LoadingSpinner: Components.LoadingSpinner;
-    NotFound: Components.NotFound;
-    ProfilePage: Components.ProfilePage;
-    SettingsPage: Components.SettingsPage;
-    SingleComment: Components.SingleComment;
-    TabbedFeed: Components.TabbedFeed;
-  }
-
-  interface IntrinsicElements {
-    AppFooter: LocalJSX.AppFooter;
-    AppHeader: LocalJSX.AppHeader;
-    AppRoot: LocalJSX.AppRoot;
-    ArticleList: LocalJSX.ArticleList;
-    ArticleMeta: LocalJSX.ArticleMeta;
-    ArticlePage: LocalJSX.ArticlePage;
-    AuthPage: LocalJSX.AuthPage;
-    CommentForm: LocalJSX.CommentForm;
-    EditorPage: LocalJSX.EditorPage;
-    ErrorDisplay: LocalJSX.ErrorDisplay;
-    HomePage: LocalJSX.HomePage;
-    HomeTags: LocalJSX.HomeTags;
-    LoadingSpinner: LocalJSX.LoadingSpinner;
-    NotFound: LocalJSX.NotFound;
-    ProfilePage: LocalJSX.ProfilePage;
-    SettingsPage: LocalJSX.SettingsPage;
-    SingleComment: LocalJSX.SingleComment;
-    TabbedFeed: LocalJSX.TabbedFeed;
-  }
-}
-export { LocalJSX as JSX };
-
-declare module '@stencil/core' {
-  export namespace JSX {
-    interface ElementInterfaces extends LocalJSX.ElementInterfaces {}
-    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
   }
 }
 
@@ -374,25 +249,111 @@ declare global {
     'single-comment': HTMLSingleCommentElement;
     'tabbed-feed': HTMLTabbedFeedElement;
   }
+}
 
-  interface ElementTagNameMap {
-    'app-footer': HTMLAppFooterElement;
-    'app-header': HTMLAppHeaderElement;
-    'app-root': HTMLAppRootElement;
-    'article-list': HTMLArticleListElement;
-    'article-meta': HTMLArticleMetaElement;
-    'article-page': HTMLArticlePageElement;
-    'auth-page': HTMLAuthPageElement;
-    'comment-form': HTMLCommentFormElement;
-    'editor-page': HTMLEditorPageElement;
-    'error-display': HTMLErrorDisplayElement;
-    'home-page': HTMLHomePageElement;
-    'home-tags': HTMLHomeTagsElement;
-    'loading-spinner': HTMLLoadingSpinnerElement;
-    'not-found': HTMLNotFoundElement;
-    'profile-page': HTMLProfilePageElement;
-    'settings-page': HTMLSettingsPageElement;
-    'single-comment': HTMLSingleCommentElement;
-    'tabbed-feed': HTMLTabbedFeedElement;
+declare namespace LocalJSX {
+  interface AppFooter extends JSXBase.HTMLAttributes<HTMLAppFooterElement> {}
+  interface AppHeader extends JSXBase.HTMLAttributes<HTMLAppHeaderElement> {
+    signOut?: TSignOut;
+    user?: IUser;
+  }
+  interface AppRoot extends JSXBase.HTMLAttributes<HTMLAppRootElement> {}
+  interface ArticleList extends JSXBase.HTMLAttributes<HTMLArticleListElement> {
+    errors?: IAPIErrors;
+    listedArticles?: IArticle[];
+    user?: IUser;
+  }
+  interface ArticleMeta extends JSXBase.HTMLAttributes<HTMLArticleMetaElement> {
+    article?: IArticle;
+    followFavorite?: (isFollow: boolean) => void;
+    history?: RouterHistory;
+    user?: IUser;
+  }
+  interface ArticlePage extends JSXBase.HTMLAttributes<HTMLArticlePageElement> {
+    history?: RouterHistory;
+    match?: MatchResults;
+    user?: IUser;
+  }
+  interface AuthPage extends JSXBase.HTMLAttributes<HTMLAuthPageElement> {
+    match?: MatchResults;
+    setUser?: (user: IUser) => void;
+  }
+  interface CommentForm extends JSXBase.HTMLAttributes<HTMLCommentFormElement> {
+    addComment?: (comment: IComment) => void;
+    slug?: string;
+    user?: IUser;
+  }
+  interface EditorPage extends JSXBase.HTMLAttributes<HTMLEditorPageElement> {
+    history?: RouterHistory;
+    match?: MatchResults;
+    user?: IUser;
+  }
+  interface ErrorDisplay
+    extends JSXBase.HTMLAttributes<HTMLErrorDisplayElement> {
+    errors?: IAPIErrors;
+  }
+  interface HomePage extends JSXBase.HTMLAttributes<HTMLHomePageElement> {
+    user?: IUser;
+  }
+  interface HomeTags extends JSXBase.HTMLAttributes<HTMLHomeTagsElement> {
+    setTag?: (tag: string) => void;
+  }
+  interface LoadingSpinner
+    extends JSXBase.HTMLAttributes<HTMLLoadingSpinnerElement> {}
+  interface NotFound extends JSXBase.HTMLAttributes<HTMLNotFoundElement> {
+    history?: RouterHistory;
+  }
+  interface ProfilePage extends JSXBase.HTMLAttributes<HTMLProfilePageElement> {
+    match?: MatchResults;
+    user?: IUser;
+  }
+  interface SettingsPage
+    extends JSXBase.HTMLAttributes<HTMLSettingsPageElement> {
+    setUser?: (user: IUser) => void;
+    user?: IUser;
+  }
+  interface SingleComment
+    extends JSXBase.HTMLAttributes<HTMLSingleCommentElement> {
+    comment?: IComment;
+    removeComment?: (id: number) => void;
+    slug?: string;
+    user?: IUser;
+  }
+  interface TabbedFeed extends JSXBase.HTMLAttributes<HTMLTabbedFeedElement> {
+    activeTag?: string;
+    clearTag?: () => void;
+    isProfile?: boolean;
+    possibleTabs?: Array<TTabTypes>;
+    profile?: IProfile;
+    user?: IUser;
+  }
+
+  interface IntrinsicElements {
+    'app-footer': AppFooter;
+    'app-header': AppHeader;
+    'app-root': AppRoot;
+    'article-list': ArticleList;
+    'article-meta': ArticleMeta;
+    'article-page': ArticlePage;
+    'auth-page': AuthPage;
+    'comment-form': CommentForm;
+    'editor-page': EditorPage;
+    'error-display': ErrorDisplay;
+    'home-page': HomePage;
+    'home-tags': HomeTags;
+    'loading-spinner': LoadingSpinner;
+    'not-found': NotFound;
+    'profile-page': ProfilePage;
+    'settings-page': SettingsPage;
+    'single-comment': SingleComment;
+    'tabbed-feed': TabbedFeed;
+  }
+}
+
+export { LocalJSX as JSX };
+
+declare module '@stencil/core' {
+  export namespace JSX {
+    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
   }
 }
