@@ -1,4 +1,4 @@
-import { Component, State, Prop } from '@stencil/core';
+import { Component, State, h, Prop } from '@stencil/core';
 import { getTags } from '../../api/tags';
 
 @Component({

@@ -8,8 +8,9 @@ export const config: Config = {
   outputTargets: [
     {
       type: 'www',
+      baseUrl: 'https://stencil-realworld.netlify.com',
       // uncomment the following line to disable service workers in production
-      serviceWorker: null,
+      // serviceWorker: null,
     },
   ],
 };

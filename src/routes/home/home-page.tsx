@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, h, State } from '@stencil/core';
 import { IUser } from '../../api/auth';
 
 @Component({

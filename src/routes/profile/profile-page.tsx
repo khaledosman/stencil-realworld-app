@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch } from '@stencil/core';
+import { Component, Prop, State, h, Watch } from '@stencil/core';
 import { MatchResults } from '@stencil/router';
 import { IAPIErrors } from '../../api/utils';
 import { IProfile, getProfile, followProfile } from '../../api/profiles';
