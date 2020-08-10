@@ -11,7 +11,7 @@ export class ArticleList {
   @Prop() listedArticles: IArticle[];
   @Prop() errors: IAPIErrors;
 
-  @State() articles: IArticle[] = this.listedArticles;
+  @State() articles: IArticle[];
 
   favoriteArticle = async e => {
     const button = e.currentTarget;
