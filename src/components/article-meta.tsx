@@ -83,7 +83,7 @@ export class ArticleMeta {
                 aria-label={`Click to favorite this article`}
                 onClick={this.favoriteArticle}
               >
-                <ion-icon name="ion-heart"></ion-icon>
+                <ion-icon name="heart"></ion-icon>
                 &nbsp; {favorited ? 'Unfavorite' : 'Favorite'} Article{' '}
                 <span class="counter">({favoritesCount})</span>
               </button>,
