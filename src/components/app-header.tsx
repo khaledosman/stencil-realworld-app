@@ -31,13 +31,13 @@ export class Header {
               ? [
                   <li class="nav-item">
                     <stencil-route-link anchorClass="nav-link" url="/editor">
-                      <i class="ion-compose" />
+                      <ion-icon name="compose"></ion-icon>
                       &nbsp;New Post
                     </stencil-route-link>
                   </li>,
                   <li class="nav-item">
                     <stencil-route-link anchorClass="nav-link" url="/settings">
-                      <i class="ion-gear-a" />
+                      <ion-icon name="gear-a"></ion-icon>
                       &nbsp;Settings
                     </stencil-route-link>
                   </li>,

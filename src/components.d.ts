@@ -80,7 +80,7 @@ export namespace Components {
     activeTag?: string;
     clearTag?: () => void;
     isProfile?: boolean;
-    possibleTabs: Array<TTabTypes>;
+    possibleTabs: TTabTypes[];
     profile?: IProfile;
     user?: IUser;
   }
@@ -299,7 +299,7 @@ declare namespace LocalJSX {
     activeTag?: string;
     clearTag?: () => void;
     isProfile?: boolean;
-    possibleTabs?: Array<TTabTypes>;
+    possibleTabs?: TTabTypes[];
     profile?: IProfile;
     user?: IUser;
   }

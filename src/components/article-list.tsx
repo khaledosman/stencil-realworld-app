@@ -96,7 +96,7 @@ export class ArticleList {
             disabled={!this.user}
             onClick={this.favoriteArticle}
           >
-            <i class="ion-heart" /> {a.favoritesCount}
+            <ion-icon name="ion-heart"></ion-icon> {a.favoritesCount}
           </button>
         </div>
         <stencil-route-link

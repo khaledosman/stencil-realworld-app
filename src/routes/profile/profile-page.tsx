@@ -102,7 +102,7 @@ export class ProfilePage {
                     }`}
                     onClick={this.followProfile}
                   >
-                    {!following && <i class="ion-plus-round" />}
+                    {!following && <ion-icon name="ion-plus-round"></ion-icon>}
                     &nbsp; {following ? 'Unfollow' : 'Follow'} {username}
                   </button>
                 )}

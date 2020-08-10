@@ -56,7 +56,7 @@ export class SingleComment {
                 aria-label="Button to delete your comment"
                 onClick={this.deleteComment}
               >
-                <i class="ion-trash-a" />
+                <ion-icon name="ion-trash-a"></ion-icon>
               </button>
             </span>
           )}

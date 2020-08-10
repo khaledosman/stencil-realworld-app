@@ -55,14 +55,14 @@ export class ArticleMeta {
                 anchorClass="btn btn-outline-secondary btn-sm"
                 url={`/editor/${slug}`}
               >
-                <i class="ion-edit" /> Edit Article
+                <ion-icon name="ion-edit"></ion-icon> Edit Article
               </stencil-route-link>,
               <button
                 class="btn btn-outline-danger btn-sm"
                 aria-label={`Click to delete this article`}
                 onClick={this.deleteArticle}
               >
-                <i class="ion-trash-a" /> Delete Article
+                <ion-icon name="ion-trash-a"></ion-icon> Delete Article
               </button>,
             ]
           : this.user && [
@@ -73,7 +73,7 @@ export class ArticleMeta {
                 aria-label={`Click to follow ${username}`}
                 onClick={this.followAuthor}
               >
-                {!following && <i class="ion-plus-round" />}
+                {!following && <ion-icon name="ion-plus-round"></ion-icon>}
                 &nbsp; {!following ? 'Follow' : 'Unfollow'} {username}
               </button>,
               <button
@@ -83,7 +83,7 @@ export class ArticleMeta {
                 aria-label={`Click to favorite this article`}
                 onClick={this.favoriteArticle}
               >
-                <i class="ion-heart" />
+                <ion-icon name="ion-heart"></ion-icon>
                 &nbsp; {favorited ? 'Unfavorite' : 'Favorite'} Article{' '}
                 <span class="counter">({favoritesCount})</span>
               </button>,

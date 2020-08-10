@@ -18,7 +18,7 @@ const tabLabels = {
   tag: 'tabbed-feed',
 })
 export class TabbedFeed {
-  @Prop() possibleTabs: Array<TTabTypes> = ['global'];
+  @Prop() possibleTabs: TTabTypes[] = ['global'];
   @Prop() user?: IUser;
   @Prop() profile?: IProfile;
   @Prop() clearTag?: () => void;
@@ -135,7 +135,7 @@ export class TabbedFeed {
                   activeTab === 'tag' ? 'active disabled' : ''
                 }`}
               >
-                <i class="ion-pound" /> {activeTag}
+                <ion-icon name="ion-pound"></ion-icon> {activeTag}
               </span>
             </li>
           )}
