@@ -9,8 +9,17 @@ export const config: Config = {
     {
       type: 'www',
       baseUrl: 'https://stencil-realworld.netlify.com',
+      prerenderConfig: './prerender.config.ts',
       // uncomment the following line to disable service workers in production
       // serviceWorker: null,
     },
   ],
+  buildEs5: false,
+  extras: {
+    cssVarsShim: false,
+    dynamicImportShim: false,
+    safari10: false,
+    scriptDataOpts: false,
+    shadowDomShim: false,
+  },
 };
