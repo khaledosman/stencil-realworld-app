@@ -1,3 +1,4 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/70d889f0-bfb5-4986-ae37-c83b0f0faced/deploy-status)](https://app.netlify.com/sites/stencil-realworld/deploys)
 # ![RealWorld Example App](logo.png)
 
 [![RealWorld Frontend](https://img.shields.io/badge/realworld-frontend-%23783578.svg)](http://realworld.io)
