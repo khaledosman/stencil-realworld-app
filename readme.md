@@ -16,10 +16,6 @@ This not necessarily follows all the best practices for Stencil, as the communit
 
 For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
 
-## 🚨 Looking for maintainers
-
-If you actively work with Stencil and are interested in owning this repository, let me know in the [dedicated issue](https://github.com/hdoro/stencil-realworld-app/issues/8).
-
 ## How it works
 
 The whole codebase is based on Stencil, having as its single outside dependency (other than `stencil-router`), the markdown parser `marked` for the articles' pages. Stencil is built on top of the web-components standard and has a very tiny API, which is a blend of React, Angular and Vue. The whole app has been built on Typescript, as usual for this stack, and you might find your way around easier by taking a look at type definitions.
