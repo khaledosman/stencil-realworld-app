@@ -10,13 +10,13 @@
     "format": "prettier --write src/**/*.{ts,tsx}"
   },
   "dependencies": {
-    "@stencil/core": "^2.0.1",
+    "@stencil/core": "^2.0.3",
     "@stencil/router": "^1.0.1",
     "marked": "^1.1.1"
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "26.0.12",
+    "@types/jest": "26.0.13",
     "@types/puppeteer": "^3.0.1",
     "husky": "^4.2.5",
     "jest": "^26.4.2",
