@@ -18,12 +18,7 @@ export class Header {
           </stencil-route-link>
           <ul class="nav navbar-nav pull-xs-right">
             <li class="nav-item">
-              <stencil-route-link
-                anchorClass="nav-link"
-                url="/"
-                activeClass="active"
-                exact={true}
-              >
+              <stencil-route-link anchorClass="nav-link" url="/" activeClass="active" exact={true}>
                 Home
               </stencil-route-link>
             </li>
@@ -42,10 +37,7 @@ export class Header {
                     </stencil-route-link>
                   </li>,
                   <li class="nav-item">
-                    <stencil-route-link
-                      anchorClass="nav-link"
-                      url={`/profile/${this.user.username}`}
-                    >
+                    <stencil-route-link anchorClass="nav-link" url={`/profile/${this.user.username}`}>
                       {user.image && <img class="user-pic" src={user.image} />}
                       {user.username}
                     </stencil-route-link>
@@ -58,20 +50,12 @@ export class Header {
                 ]
               : [
                   <li class="nav-item">
-                    <stencil-route-link
-                      anchorClass="nav-link"
-                      url="/login"
-                      activeClass="active"
-                    >
+                    <stencil-route-link anchorClass="nav-link" url="/login" activeClass="active">
                       Sign in
                     </stencil-route-link>
                   </li>,
                   <li class="nav-item">
-                    <stencil-route-link
-                      anchorClass="nav-link"
-                      url="/register"
-                      activeClass="active"
-                    >
+                    <stencil-route-link anchorClass="nav-link" url="/register" activeClass="active">
                       Sign up
                     </stencil-route-link>
                   </li>,

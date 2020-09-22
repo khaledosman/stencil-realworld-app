@@ -1,10 +1,5 @@
 import { Component, Prop, h, State, Watch } from '@stencil/core';
-import {
-  IHandleUserReturn,
-  logUser,
-  registerUser,
-  IUser,
-} from '../../api/auth';
+import { IHandleUserReturn, logUser, registerUser, IUser } from '../../api/auth';
 import { IAPIErrors } from '../../api/utils';
 import { MatchResults } from '@stencil/router';
 
@@ -81,9 +76,7 @@ export class AuthPage {
             <div class="col-md-6 offset-md-3 col-xs-12">
               <h1 class="text-xs-center">{title}</h1>
               <p class="text-xs-center">
-                <stencil-route-link url={isRegister ? '/login' : '/register'}>
-                  {isRegister ? 'Have an account?' : 'Need an account?'}
-                </stencil-route-link>
+                <stencil-route-link url={isRegister ? '/login' : '/register'}>{isRegister ? 'Have an account?' : 'Need an account?'}</stencil-route-link>
               </p>
 
               <error-display errors={this.errors} />
@@ -124,11 +117,7 @@ export class AuthPage {
                     required={true}
                   />
                 </fieldset>
-                <button
-                  class="btn btn-lg btn-primary pull-xs-right"
-                  type="submit"
-                  disabled={this.disabled}
-                >
+                <button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled={this.disabled}>
                   {title}
                 </button>
               </form>

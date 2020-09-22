@@ -3,27 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <title>Conduit - Stencil</title>
-    <meta
-      name="Description"
-      content="Welcome to the Stencil App Starter. You can use this starter to build entire apps all with web components using Stencil!"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
-    />
+    <meta name="Description" content="Welcome to the Stencil App Starter. You can use this starter to build entire apps all with web components using Stencil!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#16161d" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="x-ua-compatible" content="IE=Edge" />
 
-    <!-- <link href="/build/app.css" rel="stylesheet" /> -->
-    <link rel="stylesheet" href="//demo.productionready.io/main.css" />
-
+    <script type="module" src="/build/app.esm.js"></script>
+    <script nomodule src="/build/app.js"></script>
     <noscript>This page requires JavaScript to run</noscript>
+
+    <link href="/build/app.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="//demo.productionready.io/main.css" /> -->
     <link
       href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic&display=swap"
       rel="stylesheet"
       type="text/css"
     />
+    <script async defer type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+    <script async defer nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
 
     <link rel="apple-touch-icon" href="/assets/icon/icon.png" />
     <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico" />
@@ -32,19 +30,5 @@
 
   <body>
     <app-root></app-root>
-    <script type="module" src="build/app.esm.js"></script>
-    <script nomodule src="build/app.js"></script>
-    <script
-      async
-      defer
-      type="module"
-      src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      async
-      defer
-      nomodule=""
-      src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"
-    ></script>
   </body>
 </html>

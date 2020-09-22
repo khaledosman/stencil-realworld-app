@@ -1,19 +1,26 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
-# dependencies
-node_modules/
-
-#System Files
-.DS_Store
-Thumbs.db
-
-# Stencil-related
 dist/
 !www/favicon.ico
 www/
+
+*~
+*.sw[mnpcod]
+*.log
+*.lock
+*.tmp
+*.tmp.*
+log.txt
+*.sublime-project
+*.sublime-workspace
+
 .stencil/
+.idea/
+.vscode/
+.sass-cache/
+.versions/
+node_modules/
+$RECYCLE.BIN/
 
-# Personal
-backup/
-
-components.d.ts
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
+.env

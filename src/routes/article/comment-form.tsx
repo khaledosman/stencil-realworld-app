@@ -22,11 +22,7 @@ export class CommentForm {
     }
 
     this.disabled = true;
-    const commentInfo = await createComment(
-      this.slug,
-      this.body,
-      this.user.token
-    );
+    const commentInfo = await createComment(this.slug, this.body, this.user.token);
     const { comment, errors, success } = commentInfo;
     if (success) {
       this.body = '';
@@ -49,9 +45,7 @@ export class CommentForm {
     if (!this.user) {
       return (
         <p>
-          Please <stencil-route-link url="/login">sign in</stencil-route-link>{' '}
-          or <stencil-route-link url="/register">register</stencil-route-link>{' '}
-          to comment.
+          Please <stencil-route-link url="/login">sign in</stencil-route-link> or <stencil-route-link url="/register">register</stencil-route-link> to comment.
         </p>
       );
     }
@@ -60,14 +54,7 @@ export class CommentForm {
       <form class="card comment-form" onSubmit={this.handleSubmit}>
         <fieldset disabled={this.disabled}>
           <div class="card-block">
-            <textarea
-              class="form-control"
-              placeholder="Write a comment..."
-              rows={3}
-              value={this.body}
-              onInput={this.handleChange}
-              required={true}
-            />
+            <textarea class="form-control" placeholder="Write a comment..." rows={3} value={this.body} onInput={this.handleChange} required={true} />
           </div>
           <div class="card-footer">
             <img src={this.user.image} class="comment-author-img" />

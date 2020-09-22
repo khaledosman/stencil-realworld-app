@@ -59,24 +59,9 @@ export class AppRoot {
         <app-header user={user} signOut={this.signOut} />
         <stencil-router>
           <stencil-route-switch scrollTopOffset={0}>
-            <stencil-route
-              url="/"
-              component="home-page"
-              exact={true}
-              componentProps={{ user }}
-            />
-            <stencil-route
-              url="/profile/:username"
-              component="profile-page"
-              exact={true}
-              componentProps={{ user }}
-            />
-            <stencil-route
-              url="/article/:slug"
-              component="article-page"
-              exact={true}
-              componentProps={{ user }}
-            />
+            <stencil-route url="/" component="home-page" exact={true} componentProps={{ user }} />
+            <stencil-route url="/profile/:username" component="profile-page" exact={true} componentProps={{ user }} />
+            <stencil-route url="/article/:slug" component="article-page" exact={true} componentProps={{ user }} />
             {/* Protected routes check if logged, else render 404 */}
             <stencil-route
               url="/settings"
@@ -87,19 +72,9 @@ export class AppRoot {
                 user,
               }}
             />
-            <stencil-route
-              url={['/editor', '/editor/:slug']}
-              component={isLogged ? 'editor-page' : 'not-found'}
-              exact={true}
-              componentProps={{ user }}
-            />
+            <stencil-route url={['/editor', '/editor/:slug']} component={isLogged ? 'editor-page' : 'not-found'} exact={true} componentProps={{ user }} />
             {/* Visitor-only routes? check if logged, if so, render 404 */}
-            <stencil-route
-              url={['/login', '/register']}
-              component={isLogged ? 'not-found' : 'auth-page'}
-              componentProps={{ setUser: this.setUser }}
-              exact={true}
-            />
+            <stencil-route url={['/login', '/register']} component={isLogged ? 'not-found' : 'auth-page'} componentProps={{ setUser: this.setUser }} exact={true} />
             {/* Catch-all 404 route */}
             <stencil-route component="not-found" />
           </stencil-route-switch>

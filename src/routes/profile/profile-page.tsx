@@ -48,11 +48,7 @@ export class ProfilePage {
       ...profile,
       following: !profile.following,
     };
-    const res = await followProfile(
-      profile.username,
-      user.token,
-      profile.following
-    );
+    const res = await followProfile(profile.username, user.token, profile.following);
     const { success, errors } = res;
     if (!success) {
       console.error(errors);
@@ -75,10 +71,7 @@ export class ProfilePage {
     }
 
     if (this.errors) {
-      return [
-        <h1>Something went wrong</h1>,
-        <error-display errors={this.errors} />,
-      ];
+      return [<h1>Something went wrong</h1>, <error-display errors={this.errors} />];
     }
 
     if (this.notFound || !this.profile) {
@@ -96,12 +89,7 @@ export class ProfilePage {
                 <h4>{username}</h4>
                 {bio && <p>{bio}</p>}
                 {this.user && this.user.username !== username && (
-                  <button
-                    class={`btn btn-sm action-btn ${
-                      following ? 'btn-secondary' : 'btn-outline-secondary'
-                    }`}
-                    onClick={this.followProfile}
-                  >
+                  <button class={`btn btn-sm action-btn ${following ? 'btn-secondary' : 'btn-outline-secondary'}`} onClick={this.followProfile}>
                     {!following && <ion-icon name="ion-plus-round"></ion-icon>}
                     &nbsp; {following ? 'Unfollow' : 'Follow'} {username}
                   </button>
@@ -114,13 +102,7 @@ export class ProfilePage {
         <div class="container">
           <div class="row">
             <div class="col-xs-12 col-md-10 offset-md-1">
-              <tabbed-feed
-                class="col-md-9"
-                user={this.user}
-                profile={this.profile}
-                possibleTabs={['authored', 'favorited']}
-                isProfile={true}
-              />
+              <tabbed-feed class="col-md-9" user={this.user} profile={this.profile} possibleTabs={['authored', 'favorited']} isProfile={true} />
             </div>
           </div>
         </div>

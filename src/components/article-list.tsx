@@ -55,10 +55,7 @@ export class ArticleList {
 
   render() {
     if (this.errors || !Array.isArray(this.articles)) {
-      return [
-        <p>There was an error fetching recent articles, details below</p>,
-        <error-display errors={this.errors} />,
-      ];
+      return [<p>There was an error fetching recent articles, details below</p>, <error-display errors={this.errors} />];
     }
 
     if (this.articles.length === 0) {
@@ -72,10 +69,7 @@ export class ArticleList {
             <img src={a.author.image} />
           </stencil-route-link>
           <div class="info">
-            <stencil-route-link
-              url={`/profile/${a.author.username}`}
-              anchorClass="author"
-            >
+            <stencil-route-link url={`/profile/${a.author.username}`} anchorClass="author">
               {a.author.username}
             </stencil-route-link>
             <span class="date">
@@ -87,9 +81,7 @@ export class ArticleList {
             </span>
           </div>
           <button
-            class={`btn btn-sm pull-xs-right ${
-              a.favorited ? 'btn-primary' : 'btn-outline-primary'
-            }`}
+            class={`btn btn-sm pull-xs-right ${a.favorited ? 'btn-primary' : 'btn-outline-primary'}`}
             data-article-slug={a.slug}
             data-article-favorited={a.favorited ? '1' : '0'}
             data-article-index={i}
@@ -99,10 +91,7 @@ export class ArticleList {
             <ion-icon name="heart"></ion-icon> {a.favoritesCount}
           </button>
         </div>
-        <stencil-route-link
-          url={`/article/${a.slug}`}
-          anchorClass="preview-link"
-        >
+        <stencil-route-link url={`/article/${a.slug}`} anchorClass="preview-link">
           <h1>{a.title}</h1>
           <p>{a.description}</p>
           <span>Read more...</span>

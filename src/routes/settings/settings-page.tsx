@@ -87,27 +87,17 @@ export class SettingsPage {
                 <fieldset disabled={this.disabled}>
                   {inputFields.map(i => {
                     const props = {
-                      class: 'form-control form-control-lg',
-                      placeholder: i.placeholder,
-                      type: i.type || 'text',
-                      value: this[i.id],
-                      onInput: this.handleChange,
-                      required: i.required || false,
+                      'class': 'form-control form-control-lg',
+                      'placeholder': i.placeholder,
+                      'type': i.type || 'text',
+                      'value': this[i.id],
+                      'onInput': this.handleChange,
+                      'required': i.required || false,
                       'data-settings-id': i.id,
                     };
-                    return (
-                      <fieldset class="form-group">
-                        {i.isTextArea ? (
-                          <textarea {...props} rows={8} />
-                        ) : (
-                          <input {...props} />
-                        )}
-                      </fieldset>
-                    );
+                    return <fieldset class="form-group">{i.isTextArea ? <textarea {...props} rows={8} /> : <input {...props} />}</fieldset>;
                   })}
-                  <button class="btn btn-lg btn-primary pull-xs-right">
-                    Update Settings
-                  </button>
+                  <button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
                 </fieldset>
               </form>
             </div>

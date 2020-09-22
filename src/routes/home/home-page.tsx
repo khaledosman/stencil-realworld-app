@@ -28,13 +28,7 @@ export class HomePage {
         </div>
         <div class="container page">
           <div class="row">
-            <tabbed-feed
-              class="col-md-9"
-              user={this.user}
-              clearTag={this.setTag}
-              activeTag={this.activeTag}
-              possibleTabs={this.user ? ['global', 'feed'] : ['global']}
-            />
+            <tabbed-feed class="col-md-9" user={this.user} clearTag={this.setTag} activeTag={this.activeTag} possibleTabs={this.user ? ['global', 'feed'] : ['global']} />
             <home-tags class="col-md-3" setTag={this.setTag} />
           </div>
         </div>

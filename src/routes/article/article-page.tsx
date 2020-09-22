@@ -2,11 +2,7 @@ import { Component, h, State, Prop } from '@stencil/core';
 import { MatchResults, RouterHistory } from '@stencil/router';
 import marked from 'marked';
 
-import {
-  IArticle,
-  getSingleArticle,
-  favoriteArticle,
-} from '../../api/articles';
+import { IArticle, getSingleArticle, favoriteArticle } from '../../api/articles';
 import { IAPIErrors } from '../../api/utils';
 import { IComment, getCommentsList } from '../../api/comments';
 import { followProfile } from '../../api/profiles';
@@ -76,13 +72,7 @@ export class ArticlePage {
           favorited: !article.favorited,
           favoritesCount: article.favoritesCount + (article.favorited ? -1 : 1),
         };
-    const res = isFollow
-      ? await followProfile(
-          user.username,
-          this.user.token,
-          article.author.following
-        )
-      : await favoriteArticle(article.slug, this.user.token, article.favorited);
+    const res = isFollow ? await followProfile(user.username, this.user.token, article.author.following) : await favoriteArticle(article.slug, this.user.token, article.favorited);
     const { success } = res;
     if (!success) {
       this.article = article;
@@ -107,10 +97,7 @@ export class ArticlePage {
     }
 
     if (this.errors) {
-      return [
-        <h1>Something went wrong</h1>,
-        <error-display errors={this.errors} />,
-      ];
+      return [<h1>Something went wrong</h1>, <error-display errors={this.errors} />];
     }
 
     if (this.notFound || !this.article) {
@@ -155,31 +142,14 @@ export class ArticlePage {
           <div class="row">
             <div class="col-xs-12 col-md-8 offset-md-2">
               {user ? (
-                <comment-form
-                  slug={slug}
-                  user={this.user}
-                  addComment={this.addComment}
-                />
+                <comment-form slug={slug} user={this.user} addComment={this.addComment} />
               ) : (
                 <p>
-                  <stencil-route-link url="/login">Sign in</stencil-route-link>{' '}
-                  or{' '}
-                  <stencil-route-link url="/register">
-                    sign up
-                  </stencil-route-link>{' '}
-                  to comment.
+                  <stencil-route-link url="/login">Sign in</stencil-route-link> or <stencil-route-link url="/register">sign up</stencil-route-link> to comment.
                 </p>
               )}
 
-              {this.comments &&
-                this.comments.map(c => (
-                  <single-comment
-                    user={this.user}
-                    comment={c}
-                    slug={slug}
-                    removeComment={this.removeComment}
-                  />
-                ))}
+              {this.comments && this.comments.map(c => <single-comment user={this.user} comment={c} slug={slug} removeComment={this.removeComment} />)}
             </div>
           </div>
         </div>

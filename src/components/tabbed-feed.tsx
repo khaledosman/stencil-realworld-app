@@ -35,20 +35,10 @@ export class TabbedFeed {
   listArticles = async () => {
     const { user } = this;
     this.isLoading = true;
-    const offset =
-      this.currentPage > 0 ? `offset=${this.currentPage * perPage}&` : '';
-    const tag =
-      this.activeTag && this.activeTab === 'tag'
-        ? `tag=${this.activeTag}&`
-        : '';
-    const author =
-      this.activeTab === 'authored' && this.profile
-        ? `author=${this.profile.username}&`
-        : '';
-    const favorited =
-      this.activeTab === 'favorited' && this.profile
-        ? `favorited=${this.profile.username}&`
-        : '';
+    const offset = this.currentPage > 0 ? `offset=${this.currentPage * perPage}&` : '';
+    const tag = this.activeTag && this.activeTab === 'tag' ? `tag=${this.activeTag}&` : '';
+    const author = this.activeTab === 'authored' && this.profile ? `author=${this.profile.username}&` : '';
+    const favorited = this.activeTab === 'favorited' && this.profile ? `favorited=${this.profile.username}&` : '';
     const params = `limit=${perPage}&${offset}${tag}${author}${favorited}`;
 
     const articleList = await getArticleList({
@@ -130,11 +120,7 @@ export class TabbedFeed {
           ))}
           {activeTag && (
             <li class="nav-item">
-              <span
-                class={`nav-link ${
-                  activeTab === 'tag' ? 'active disabled' : ''
-                }`}
-              >
+              <span class={`nav-link ${activeTab === 'tag' ? 'active disabled' : ''}`}>
                 <ion-icon name="ion-pound"></ion-icon> {activeTag}
               </span>
             </li>
@@ -146,26 +132,16 @@ export class TabbedFeed {
         <loading-spinner />
       ) : (
         [
-          <article-list
-            listedArticles={this.articles}
-            errors={this.errors}
-            user={this.user}
-          />,
+          <article-list listedArticles={this.articles} errors={this.errors} user={this.user} />,
           count > perPage && (
             <ul class="pagination">
               {pagesArray.map((p, i) => (
                 <li
                   // The `p` below is, unfortunately, only to escape typescript's
                   // compiler, else it'll say `p` is declared but never used
-                  class={`page-item ${
-                    i === this.currentPage && p ? 'active' : ''
-                  }`}
+                  class={`page-item ${i === this.currentPage && p ? 'active' : ''}`}
                 >
-                  <button
-                    class="page-link"
-                    onClick={this.goToPage}
-                    data-page-num={i}
-                  >
+                  <button class="page-link" onClick={this.goToPage} data-page-num={i}>
                     {i + 1}
                   </button>
                 </li>

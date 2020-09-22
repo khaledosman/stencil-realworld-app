@@ -1,11 +1,6 @@
 import { Component, State, h, Prop } from '@stencil/core';
 import { RouterHistory, MatchResults } from '@stencil/router';
-import {
-  createArticle,
-  IArticle,
-  getSingleArticle,
-  updateArticle,
-} from '../../api/articles';
+import { createArticle, IArticle, getSingleArticle, updateArticle } from '../../api/articles';
 import { IUser } from '../../api/auth';
 import { IAPIErrors } from '../../api/utils';
 
@@ -120,10 +115,7 @@ export class EditorPage {
     }
 
     if (this.errors) {
-      return [
-        <h1>Something went wrong</h1>,
-        <error-display errors={this.errors} />,
-      ];
+      return [<h1>Something went wrong</h1>, <error-display errors={this.errors} />];
     }
 
     // TODO: dynamic tag-list
@@ -136,28 +128,17 @@ export class EditorPage {
                 <fieldset disabled={this.disabled}>
                   {inputFields.map(i => {
                     const props = {
-                      class: `form-control ${i.large ? 'form-control-lg' : ''}`,
-                      placeholder: i.placeholder,
-                      type: 'text',
-                      value: this[i.id],
-                      onInput: this.handleChange,
-                      required: i.required || false,
+                      'class': `form-control ${i.large ? 'form-control-lg' : ''}`,
+                      'placeholder': i.placeholder,
+                      'type': 'text',
+                      'value': this[i.id],
+                      'onInput': this.handleChange,
+                      'required': i.required || false,
                       'data-settings-id': i.id,
                     };
-                    return (
-                      <fieldset class="form-group">
-                        {i.isTextArea ? (
-                          <textarea {...props} rows={8} />
-                        ) : (
-                          <input {...props} />
-                        )}
-                      </fieldset>
-                    );
+                    return <fieldset class="form-group">{i.isTextArea ? <textarea {...props} rows={8} /> : <input {...props} />}</fieldset>;
                   })}
-                  <button
-                    class="btn btn-lg pull-xs-right btn-primary"
-                    type="submit"
-                  >
+                  <button class="btn btn-lg pull-xs-right btn-primary" type="submit">
                     Publish Article
                   </button>
                 </fieldset>
