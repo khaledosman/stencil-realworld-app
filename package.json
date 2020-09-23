@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Stencil RealWorld Example App (Conduit)",
   "scripts": {
-    "build": "stencil build",
+    "build": "rm -rf www/ && stencil build",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
