@@ -57,7 +57,7 @@ export class CommentForm {
             <textarea class="form-control" placeholder="Write a comment..." rows={3} value={this.body} onInput={this.handleChange} required={true} />
           </div>
           <div class="card-footer">
-            <img src={this.user.image} class="comment-author-img" />
+            <img src={this.user.image} class="comment-author-img" alt="comment author image" />
             <button class="btn btn-sm btn-primary" type="submit">
               Post Comment
             </button>

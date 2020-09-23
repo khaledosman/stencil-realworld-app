@@ -38,7 +38,7 @@ export class Header {
                   </li>,
                   <li class="nav-item">
                     <stencil-route-link anchorClass="nav-link" url={`/profile/${this.user.username}`}>
-                      {user.image && <img class="user-pic" src={user.image} />}
+                      {user.image && <img class="user-pic" src={user.image} alt="user profile image" />}
                       {user.username}
                     </stencil-route-link>
                   </li>,

@@ -66,7 +66,7 @@ export class ArticleList {
       <div class="article-preview">
         <div class="article-meta">
           <stencil-route-link url={`/profile/${a.author.username}`}>
-            <img src={a.author.image} />
+            <img src={a.author.image} alt="author image" />
           </stencil-route-link>
           <div class="info">
             <stencil-route-link url={`/profile/${a.author.username}`} anchorClass="author">

@@ -13,11 +13,7 @@ export class SingleComment {
 
   deleteComment = async () => {
     const { user, comment, slug } = this;
-    if (
-      !user ||
-      user.username !== comment.author.username ||
-      !window.confirm('Are you sure you want to delete your comment?')
-    ) {
+    if (!user || user.username !== comment.author.username || !window.confirm('Are you sure you want to delete your comment?')) {
       return;
     }
 
@@ -37,7 +33,7 @@ export class SingleComment {
         </div>
         <div class="card-footer">
           <stencil-route-link url={authorURL} anchorClass="comment-author">
-            <img class="comment-author-img" src={author.image} />
+            <img class="comment-author-img" src={author.image} alt="comment author image" />
           </stencil-route-link>
           &nbsp;
           <stencil-route-link url={authorURL} anchorClass="comment-author">
@@ -52,10 +48,7 @@ export class SingleComment {
           </span>
           {this.user && this.user.username === author.username && (
             <span class="mod-options">
-              <button
-                aria-label="Button to delete your comment"
-                onClick={this.deleteComment}
-              >
+              <button aria-label="Button to delete your comment" onClick={this.deleteComment}>
                 <ion-icon name="ion-trash-a"></ion-icon>
               </button>
             </span>

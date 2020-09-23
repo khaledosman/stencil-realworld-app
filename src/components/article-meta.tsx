@@ -35,7 +35,7 @@ export class ArticleMeta {
     return (
       <div class="article-meta">
         <stencil-route-link url={`/profile/${username}`}>
-          <img src={image} />
+          <img src={image} alt="author image" />
         </stencil-route-link>
         <div class="info">
           <stencil-route-link url={`/profile/${username}`} anchorClass="author">

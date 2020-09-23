@@ -85,7 +85,7 @@ export class ProfilePage {
           <div class="container">
             <div class="row">
               <div class="col-xs-12 col-md-10 offset-md-1">
-                <img src={image} class="user-img" />
+                <img src={image} class="user-img" alt="user image" />
                 <h4>{username}</h4>
                 {bio && <p>{bio}</p>}
                 {this.user && this.user.username !== username && (
