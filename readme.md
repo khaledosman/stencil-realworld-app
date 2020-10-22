@@ -35,15 +35,3 @@ Feel free to file an issue or submit a PR. If you have the time and energy to im
 ## Stencil, the compiler framework
 
 If you want to learn more about Stencil and start using it, I recommend, first, taking a look at their [announcement video](https://www.youtube.com/watch?v=UfD-k7aHkQE). [The docs](https://stenciljs.com/) are still a bit incomplete, but are short and straight to the point. If you already know a modern MVC framework you can probably figure it out pretty quickly... as for Typescript, there's no express need for anything other than simple types and interfaces, [Typescript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) is a great guide to start. Just go for it!
-
-## TODO
-
-- Better testing
-  - Right now, I don't see any use for unit testing;
-  - End to end testing is limited due to a bug with `stencil-router`, but there are plenty of cool possibilities, which we can explore after that is solved;
-  - Soon Stencil will release its screenshot visual diffing testing tool, and that could provide some other cool ways to demonstrate testing.
-- Proper tag displaying in the `editor` route;
-- Continuous Integration (CI) set-up.
-  - Several free tools to do so, just have to spend the time and energy to do so.
-- Review by the Stencil community to better align best practices
-- 404 page? This is already set-up in the `not-found` component, but I don't know if it's desirable considering other RealWorld apps don't have it
