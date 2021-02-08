@@ -13,7 +13,7 @@
   "dependencies": {
     "@stencil/core": "^2.2.0",
     "@stencil/router": "^1.0.1",
-    "marked": "^1.2.2"
+    "marked": "^2.0.0"
   },
   "license": "MIT",
   "devDependencies": {
