@@ -8,7 +8,7 @@
 
 So far, I've got all the templates and proper auth in place. You can already register, log-in and change your settings.
 
-### [Demo](https://stencil-realworld.netlify.com)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
+### [Demo](https://stencil-realworld.netlify.app/)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
 
 This codebase was created to demonstrate a fully fledged fullstack application built with **[Stencil](https://stenciljs.com/)** including CRUD operations, authentication, routing, pagination, and more.
 
