@@ -1,4 +1,4 @@
-export const endpoint = 'https://conduit.productionready.io/api';
+export const endpoint = 'https://api.realworld.io/api';
 
 // --------------------
 // The example below is how you could type all your possible errors
