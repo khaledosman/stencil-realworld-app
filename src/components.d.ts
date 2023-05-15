@@ -12,6 +12,13 @@ import { MatchResults, RouterHistory } from "@stencil/router";
 import { IComment } from "./api/comments";
 import { TTabTypes } from "./components/types";
 import { IProfile } from "./api/profiles";
+export { IUser, TSignOut } from "./api/auth";
+export { IArticle } from "./api/articles";
+export { IAPIErrors } from "./api/utils";
+export { MatchResults, RouterHistory } from "@stencil/router";
+export { IComment } from "./api/comments";
+export { TTabTypes } from "./components/types";
+export { IProfile } from "./api/profiles";
 export namespace Components {
     interface AppFooter {
     }
